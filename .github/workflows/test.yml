@@ -18,7 +18,7 @@ on:
 jobs:
   test-frontend:
     name: Frontend Tests
-    runs-on: [self-hosted, solinas-ubuntu_22_04, ubuntu-latest]
+    runs-on: [self-hosted, ubuntu-latest]
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ inputs.node-version }}
@@ -50,7 +50,7 @@ jobs:
 
   test-backend:
     name: Backend Tests
-    runs-on: [self-hosted, solinas-ubuntu_22_04, ubuntu-latest]
+    runs-on: [self-hosted, ubuntu-latest]
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ inputs.node-version }}

@@ -21,7 +21,7 @@ jobs:
   report:
     needs: test
     if: github.event_name == 'pull_request'
-    runs-on: [self-hosted, solinas-ubuntu_22_04, ubuntu-latest]
+    runs-on: [self-hosted, ubuntu-latest]
     steps:
       - uses: actions/checkout@v4
 
