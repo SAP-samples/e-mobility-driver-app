@@ -1,0 +1,50 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "CLI - Start Servers (hybrid)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/cli/src/index.ts",
+      "args": ["start", "--", "--profile", "hybrid"],
+      "cwd": "${workspaceFolder}/cli",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["tsx"],
+      "skipFiles": ["<node_internals>/**"],
+      "console": "integratedTerminal",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "name": "CLI - Start Servers (production)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/cli/src/index.ts",
+      "args": ["start", "--", "--profile", "production"],
+      "cwd": "${workspaceFolder}/cli",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["tsx"],
+      "skipFiles": ["<node_internals>/**"],
+      "console": "integratedTerminal",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "name": "CLI - Config env",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/cli/src/index.ts",
+      "args": ["config"],
+      "cwd": "${workspaceFolder}/cli",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["tsx"],
+      "skipFiles": ["<node_internals>/**"],
+      "console": "integratedTerminal",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
+  ]
+}

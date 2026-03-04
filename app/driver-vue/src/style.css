@@ -1,0 +1,25 @@
+/*
+ * SPDX-FileCopyrightText: 2026 SAP SE or an SAP affiliate company and e-mobility-driver-app contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+body {
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    top: 0;
+}
+
+/* Toast styling for better mobile display */
+ui5-toast {
+    --_ui5_toast_width: calc(100vw - 2rem);
+    max-width: 500px;
+}
+
+/* Mobile-specific toast styling */
+@media (max-width: 600px) {
+    ui5-toast {
+        --_ui5_toast_width: calc(100vw - 1rem);
+        max-width: calc(100vw - 1rem);
+    }
+}

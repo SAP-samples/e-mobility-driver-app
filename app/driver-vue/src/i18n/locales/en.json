@@ -1,0 +1,215 @@
+{
+  "navigation": {
+    "home": "Home",
+    "stations": "Stations",
+    "sessions": "Sessions",
+    "badges": "Badges",
+    "refresh": "Refresh"
+  },
+  "common": {
+    "unknown": "Unknown",
+    "loading": "Loading...",
+    "dismiss": "Dismiss",
+    "try_again": "Try Again",
+    "reload_page": "Reload Page",
+    "connecting": "Connecting...",
+    "login": "Login"
+  },
+  "buttons": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "dismiss": "Dismiss",
+    "goto_home": "Go Back Home",
+    "goto_sessions": "View Sessions",
+    "goto_stations": "View Charge Points",
+    "view_on_map": "View on map",
+    "view_all_history": "View History",
+    "stop": "Stop",
+    "stop_session": "Stop Session"
+  },
+  "session": {
+    "id": "ID",
+    "date": "Date",
+    "energy": "Energy",
+    "duration": "Duration",
+    "location": "Location",
+    "charging_in_progress": "Charging in progress",
+    "finishing": "Finishing",
+    "start": "Start",
+    "starting": "Starting...",
+    "start_session_title": "Start Session",
+    "start_session_confirm": "Do you want to start a session?",
+    "start_session_success": "Charging Session Accepted, You can plug your cable",
+    "errors": {
+      "start_failed": "Failed to start charging session",
+      "evse_not_found": "Charge point not found",
+      "no_connectors": "No available connectors",
+      "timeout": "Session start timeout - please try again",
+      "warning": "Charging session could not be started",
+      "backend": "Backend error occurred",
+      "generic": "An error occurred while starting the session"
+    },
+    "preparing_action_required": "Charging session accepted. Plug in your cable or press the start button on the charge point",
+    "timeout_info": "Session started but it's taking longer than expected. Check the charge point.",
+    "start_warning": "Session accepted but charging did not start. Check the charge point.",
+    "start_success": "Session started successfully"
+  },
+  "dashboard": {
+    "all_available_stations": "Available Charge Points",
+    "eco_balance": "Eco Balance",
+    "emissions_avoided": "of emissions avoided",
+    "this_month_stats": "This Month's Stats",
+    "sessions": "Session | Sessions",
+    "spent": "Spent",
+    "recent_charges": "No recent sessions | Recent session | Recent sessions"
+  },
+  "pages": {
+    "no_badges_found": "No badges found.",
+    "no_charging_stations_found": "No charge points found.",
+    "no_station_data": "No charge point data.",
+    "searching_for_charging_stations": "Searching for charge points...",
+    "loading_evse_details": "Loading charge point details..."
+  },
+  "login": {
+    "title": "Login",
+    "ready_to_charge": "Ready to Charge Up Your Session?",
+    "charging_up_connection": "Charging Up Connection...",
+    "circuit_breaker_tripped": "Circuit Breaker Tripped!",
+    "connect_to_grid": "Connect to the grid and power up your e-mobility experience! Your electric journey awaits.",
+    "establishing_connection": "Establishing secure connection to the e-mobility grid...",
+    "connection_error": "Something went wrong with the connection. No worries—even the best charge points need a reset sometimes!"
+  },
+  "company": {
+    "name": "E-Mobility"
+  },
+  "map": {
+    "text": "Map",
+    "list": "List"
+  },
+  "address": {
+    "title": "Address",
+    "number": "Number:",
+    "street": "Street:",
+    "postal_code": "Postal Code:",
+    "city": "City:",
+    "country_code": "Country Code:",
+    "country": "Country:",
+    "state": "State:",
+    "latitude": "Latitude:",
+    "longitude": "Longitude:"
+  },
+  "location": {
+    "location_and_map": "Location & Map"
+  },
+  "station": {
+    "charging_station_name": "Charging Station Name",
+    "emi3_id": "eMI3",
+    "stations": "Charging Stations",
+    "evse": "Charge Points",
+    "connectors": "Connectors",
+    "connector_current_limit": "Current Limit",
+    "connector_current_type": "Current Type",
+    "connector_current": "Current",
+    "connector_evse_index": "Charge Point Index",
+    "connector_id": "ID",
+    "connector_max_power": "Max. Power",
+    "connector_phases": "Phases",
+    "connector_status": "Status",
+    "connector_type": "Type",
+    "connector_voltage": "Voltage",
+    "no_code": "No code",
+    "site": "Site",
+    "area": "Area",
+    "parking": "Parking",
+    "level": "Level",
+    "space": "Space",
+    "type": "Type",
+    "power": "Power"
+  },
+  "filter": {
+    "all_stations": "All charge points",
+    "available_only": "Only available charge points",
+    "available_fast_chargers": "Only available fast chargers",
+    "all": "All",
+    "available": "Available",
+    "fast": "Fast",
+    "sort_ascending": "Sort Ascending",
+    "sort_descending": "Sort Descending",
+    "hide_additional_filters": "Hide Additional Filters",
+    "show_additional_filters": "Show Additional Filters",
+    "clear_all_filters": "Clear All Filters",
+    "location_active": "Location Active",
+    "clear_all_filters_title": "Clear All Filters",
+    "locating": "Locating...",
+    "near_me": "Near Me",
+    "search_placeholder": "Search charge points, cities, areas...",
+    "charge_points": "Charge Points",
+    "places": "Places",
+    "month": "Month",
+    "year": "Year",
+    "time_filter": "Time filter"
+  },
+  "list": {
+    "load_more_results": "Load More Results",
+    "showing_count": "Showing {current} of {total}",
+    "other": "Other"
+  },
+  "status": {
+    "preparing": "Preparing",
+    "occupied": "Occupied",
+    "reserved": "Reserved",
+    "outoforder": "Outoforder",
+    "inoperative": "Inoperative",
+    "disconnected": "Disconnected"
+  },
+  "badge": {
+    "authentication_id": "Authentication ID",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "car_license": "Car License",
+    "active": "Active",
+    "expired": "Expired"
+  },
+  "messages": {
+    "available_evses": "No charge points available | Charge point available | Charge points available",
+    "available_stations": "No charge points available | Charge point available | Charge points available",
+    "confirm_stop_session": "Do you want to stop the session?",
+    "latest_sessions": "Latest Sessions",
+    "no_data_message": "Everything's connected, but there's nothing to display right now. Check back soon for more electric action!",
+    "no_data_title": "Fuse Not Blown — Just No Data!",
+    "no_sessions": "No sessions found",
+    "toast_session_stopped": "The charging session stopped, you can unplug your cable."
+  },
+  "settings": {
+    "language": "Language"
+  },
+  "language": {
+    "english": "English",
+    "french": "French",
+    "german": "German"
+  },
+  "qr": {
+    "title": "Quick Start",
+    "scan_title": "Scan QR code to start charging",
+    "scan_description": "Point your camera at the QR code on the charge point",
+    "scan_button": "Scan",
+    "browse_stations": "Browse Charge Points",
+    "decrypting": "Decrypting QR code...",
+    "processing": "Starting charging session...",
+    "errors": {
+      "network_error": "Unable to decrypt QR code: Network connection failed",
+      "invalid_qr": "Invalid or corrupted QR code",
+      "decryption_failed": "QR code decryption failed: Invalid or expired code",
+      "server_error": "QR code service temporarily unavailable",
+      "generic_decrypt": "Failed to decrypt QR code",
+      "missing_data": "Missing encrypted data in QR URL",
+      "missing_parameters": "Missing required parameters in QR URL",
+      "invalid_connector": "Invalid connector ID in QR URL",
+      "invalid_url": "Invalid QR URL format",
+      "invalid_format": "Invalid QR code format: not a valid E-Mobility QR code",
+      "missing_fields": "Invalid QR code format: missing required fields",
+      "incorrect_types": "Invalid QR code format: incorrect data types",
+      "scan_failed": "Failed to scan QR code"
+    }
+  }
+}

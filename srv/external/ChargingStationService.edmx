@@ -1,0 +1,1283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Authorization.V1.xml">
+    <edmx:Include Alias="Authorization" Namespace="Org.OData.Authorization.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+    <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+    <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+    <edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1"/>
+  </edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="emobility.cpo.api.odata.ChargingStationService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <Annotation Term="Core.Links">
+        <Collection>
+          <Record>
+            <PropertyValue Property="rel" String="author"/>
+            <PropertyValue Property="href" String="https://cap.cloud.sap"/>
+          </Record>
+        </Collection>
+      </Annotation>
+      <EntityContainer Name="EntityContainer">
+        <EntitySet Name="ChargingStations" EntityType="emobility.cpo.api.odata.ChargingStationService.ChargingStations"/>
+        <EntitySet Name="Connectors" EntityType="emobility.cpo.api.odata.ChargingStationService.Connectors"/>
+        <EntitySet Name="Coordinates" EntityType="emobility.cpo.api.odata.ChargingStationService.Coordinates"/>
+        <EntitySet Name="Addresses" EntityType="emobility.cpo.api.odata.ChargingStationService.Addresses"/>
+        <EntitySet Name="EvseLocations" EntityType="emobility.cpo.api.odata.ChargingStationService.EvseLocations">
+          <NavigationPropertyBinding Path="address" Target="Addresses"/>
+          <NavigationPropertyBinding Path="coordinates" Target="Coordinates"/>
+        </EntitySet>
+        <EntitySet Name="Evses" EntityType="emobility.cpo.api.odata.ChargingStationService.Evses">
+          <NavigationPropertyBinding Path="connectors" Target="Connectors"/>
+          <NavigationPropertyBinding Path="location" Target="EvseLocations"/>
+          <NavigationPropertyBinding Path="chargingStation" Target="ChargingStations"/>
+        </EntitySet>
+        <EntitySet Name="ChargingPlans" EntityType="emobility.cpo.api.odata.ChargingStationService.ChargingPlans"/>
+      </EntityContainer>
+      <EntityType Name="ChargingStations">
+        <Key>
+          <PropertyRef Name="id"/>
+        </Key>
+        <Property Name="id" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" MaxLength="50"/>
+        <Property Name="registrationStatus" Type="Edm.String"/>
+        <Property Name="siteId" Type="Edm.Guid"/>
+        <Property Name="siteAreaId" Type="Edm.Guid"/>
+        <Property Name="siteAreaName" Type="Edm.String" MaxLength="100"/>
+        <Property Name="siteName" Type="Edm.String" MaxLength="100"/>
+        <Property Name="serialNumber" Type="Edm.String"/>
+        <Property Name="model" Type="Edm.String" MaxLength="20"/>
+        <Property Name="vendor" Type="Edm.String" MaxLength="25"/>
+        <Property Name="iccid" Type="Edm.String" MaxLength="20"/>
+        <Property Name="imsi" Type="Edm.String" MaxLength="20"/>
+        <Property Name="meterType" Type="Edm.String" MaxLength="25"/>
+        <Property Name="firmwareVersion" Type="Edm.String" MaxLength="50"/>
+        <Property Name="firmwareUpdateStatus" Type="Edm.String" MaxLength="20"/>
+        <Property Name="meterSerialNumber" Type="Edm.String" MaxLength="25"/>
+        <Property Name="ocppVersion" Type="Edm.String" MaxLength="5"/>
+        <Property Name="ocppFormat" Type="Edm.String" MaxLength="4"/>
+        <Property Name="publicUrl" Type="Edm.String" MaxLength="2048"/>
+        <Property Name="lastSeenAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="disabled" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="manualConfiguration" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="rebootedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="maximumPower" Type="Edm.Double"/>
+        <Property Name="voltage" Type="Edm.Int32"/>
+        <Property Name="excludedFromDynamicLoadManagement" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="ocppStandardParameters" Type="Collection(emobility.cpo.api.odata.ChargingStationService.ChargingStations_ocppStandardParameters)" Nullable="true"/>
+        <Property Name="ocppVendorParameters" Type="Collection(emobility.cpo.api.odata.ChargingStationService.ChargingStations_ocppVendorParameters)" Nullable="true"/>
+        <Property Name="roaming" Type="Edm.Boolean" DefaultValue="false"/>
+      </EntityType>
+      <EntityType Name="Connectors">
+        <Key>
+          <PropertyRef Name="connectorId"/>
+        </Key>
+        <Property Name="connectorId" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="type" Type="Edm.String" MaxLength="10"/>
+        <Property Name="currentType" Type="Edm.String" MaxLength="2"/>
+        <Property Name="voltage" Type="Edm.Int32"/>
+        <Property Name="numberOfPhases" Type="Edm.Double"/>
+        <Property Name="evseIndex" Type="Edm.Int32"/>
+        <Property Name="current" Type="Edm.Double"/>
+        <Property Name="currentLimit" Type="Edm.Double"/>
+        <Property Name="status" Type="Edm.String" MaxLength="15"/>
+        <Property Name="maximumPower" Type="Edm.Double"/>
+      </EntityType>
+      <EntityType Name="Coordinates">
+        <Property Name="latitude" Type="Edm.String" MaxLength="10"/>
+        <Property Name="longitude" Type="Edm.String" MaxLength="11"/>
+      </EntityType>
+      <EntityType Name="Addresses">
+        <Property Name="number" Type="Edm.String" MaxLength="8"/>
+        <Property Name="street" Type="Edm.String" MaxLength="36"/>
+        <Property Name="postalCode" Type="Edm.String" MaxLength="10"/>
+        <Property Name="city" Type="Edm.String" MaxLength="45"/>
+        <Property Name="countryCode" Type="Edm.String" MaxLength="3"/>
+        <Property Name="country" Type="Edm.String" MaxLength="255"/>
+        <Property Name="state" Type="Edm.String" MaxLength="20"/>
+      </EntityType>
+      <EntityType Name="EvseLocations">
+        <Property Name="parkingLevel" Type="Edm.String" MaxLength="32"/>
+        <Property Name="parkingName" Type="Edm.String" MaxLength="32"/>
+        <Property Name="parkingSpace" Type="Edm.String" MaxLength="32"/>
+        <Property Name="companyId" Type="Edm.Guid"/>
+        <Property Name="siteId" Type="Edm.Guid"/>
+        <Property Name="siteName" Type="Edm.String" MaxLength="100"/>
+        <Property Name="siteAreaId" Type="Edm.Guid"/>
+        <Property Name="siteAreaName" Type="Edm.String" MaxLength="100"/>
+        <NavigationProperty Name="address" Type="emobility.cpo.api.odata.ChargingStationService.Addresses">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="coordinates" Type="emobility.cpo.api.odata.ChargingStationService.Coordinates">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="Evses">
+        <Key>
+          <PropertyRef Name="id"/>
+        </Key>
+        <Property Name="id" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="emi3Id" Type="Edm.String" MaxLength="39"/>
+        <Property Name="index" Type="Edm.Int32"/>
+        <Property Name="code" Type="Edm.String" MaxLength="32"/>
+        <Property Name="name" Type="Edm.String" MaxLength="100"/>
+        <Property Name="parking" Type="Edm.String" MaxLength="32"/>
+        <Property Name="parkingLevel" Type="Edm.String" MaxLength="32"/>
+        <Property Name="parkingSpace" Type="Edm.String" MaxLength="32"/>
+        <Property Name="chargingStationId" Type="Edm.Guid"/>
+        <Property Name="chargingStationName" Type="Edm.String" MaxLength="50"/>
+        <NavigationProperty Name="connectors" Type="Collection(emobility.cpo.api.odata.ChargingStationService.Connectors)">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="location" Type="emobility.cpo.api.odata.ChargingStationService.EvseLocations">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="chargingStation" Type="emobility.cpo.api.odata.ChargingStationService.ChargingStations">
+          <ReferentialConstraint Property="chargingStationId" ReferencedProperty="id"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="ChargingSchedule">
+        <Property Name="totalDuration" Type="Edm.Double"/>
+        <Property Name="startTime" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="periods" Type="Collection(emobility.cpo.api.odata.ChargingStationService.ChargingSchedule_periods)" Nullable="true"/>
+      </EntityType>
+      <EntityType Name="Profile">
+        <Property Name="recurrencePattern" Type="Edm.String" MaxLength="10"/>
+        <Property Name="chargingSessionId" Type="Edm.Int32"/>
+        <NavigationProperty Name="schedule" Type="emobility.cpo.api.odata.ChargingStationService.ChargingSchedule" ContainsTarget="true"/>
+      </EntityType>
+      <EntityType Name="ChargingPlans">
+        <Key>
+          <PropertyRef Name="id"/>
+        </Key>
+        <Property Name="id" Type="Edm.String" Nullable="false"/>
+        <Property Name="evseIndex" Type="Edm.Int32"/>
+        <Property Name="connectorId" Type="Edm.Int32"/>
+        <Property Name="chargingStationId" Type="Edm.Guid"/>
+        <NavigationProperty Name="profile" Type="emobility.cpo.api.odata.ChargingStationService.Profile" ContainsTarget="true"/>
+      </EntityType>
+      <ComplexType Name="ChargingStations_ocppStandardParameters">
+        <Property Name="key" Type="Edm.String"/>
+        <Property Name="value" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="ChargingStations_ocppVendorParameters">
+        <Property Name="key" Type="Edm.String"/>
+        <Property Name="value" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="emobility_cpo_api_odata_OCPPResetResponse">
+        <Property Name="responseCode" Type="Edm.Int32"/>
+        <Property Name="responseMessage" Type="Edm.String"/>
+        <Property Name="timestamp" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="responseData" Type="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_ResponseData"/>
+      </ComplexType>
+      <ComplexType Name="emobility_cpo_api_odata_ResponseData">
+        <Property Name="status" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="emobility_cpo_api_odata_OCPPStartResponse">
+        <Property Name="responseCode" Type="Edm.Int32"/>
+        <Property Name="responseMessage" Type="Edm.String"/>
+        <Property Name="timestamp" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="responseData" Type="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_ResponseData"/>
+      </ComplexType>
+      <ComplexType Name="emobility_cpo_api_odata_OCPPStopResponse">
+        <Property Name="responseCode" Type="Edm.Int32"/>
+        <Property Name="responseMessage" Type="Edm.String"/>
+        <Property Name="timestamp" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="responseData" Type="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_ResponseData"/>
+      </ComplexType>
+      <ComplexType Name="emobility_cpo_api_odata_OCPPDataTransferResponse">
+        <Property Name="responseCode" Type="Edm.Int32"/>
+        <Property Name="responseMessage" Type="Edm.String"/>
+        <Property Name="timestamp" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="responseData" Type="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_TransferResponseData"/>
+      </ComplexType>
+      <ComplexType Name="emobility_cpo_api_odata_TransferResponseData">
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="data" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="emobility_cpo_api_odata_Data">
+        <Property Name="vendorId" Type="Edm.String" MaxLength="255" Nullable="false"/>
+        <Property Name="messageId" Type="Edm.String" MaxLength="50"/>
+        <Property Name="data" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="ChargingSchedule_periods">
+        <Property Name="startPeriod" Type="Edm.Double"/>
+        <Property Name="limit" Type="Edm.Double"/>
+        <Property Name="numberPhases" Type="Edm.Int32"/>
+      </ComplexType>
+      <Action Name="Reset" IsBound="true">
+        <Parameter Name="in" Type="emobility.cpo.api.odata.ChargingStationService.ChargingStations"/>
+        <Parameter Name="type" Type="Edm.String"/>
+        <ReturnType Type="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPResetResponse"/>
+      </Action>
+      <Action Name="Start" IsBound="true">
+        <Parameter Name="in" Type="emobility.cpo.api.odata.ChargingStationService.ChargingStations"/>
+        <Parameter Name="badgeAuthenticationId" Type="Edm.String"/>
+        <Parameter Name="connectorId" Type="Edm.Int32"/>
+        <ReturnType Type="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPStartResponse"/>
+      </Action>
+      <Action Name="Stop" IsBound="true">
+        <Parameter Name="in" Type="emobility.cpo.api.odata.ChargingStationService.ChargingStations"/>
+        <Parameter Name="chargingSessionId" Type="Edm.Int32"/>
+        <ReturnType Type="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPStopResponse"/>
+      </Action>
+      <Action Name="TransferData" IsBound="true">
+        <Parameter Name="in" Type="emobility.cpo.api.odata.ChargingStationService.ChargingStations"/>
+        <Parameter Name="data" Type="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_Data"/>
+        <ReturnType Type="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPDataTransferResponse"/>
+      </Action>
+      <Action Name="ChangeSiteArea" IsBound="true">
+        <Parameter Name="in" Type="emobility.cpo.api.odata.ChargingStationService.ChargingStations"/>
+        <Parameter Name="siteAreaId" Type="Edm.Guid"/>
+        <ReturnType Type="Edm.String"/>
+      </Action>
+      <Action Name="ChangeRoamingFlag" IsBound="true">
+        <Parameter Name="in" Type="emobility.cpo.api.odata.ChargingStationService.ChargingStations"/>
+        <Parameter Name="roaming" Type="Edm.Boolean"/>
+      </Action>
+      <Annotation Term="Core.SchemaVersion" String="1.0"/>
+      <Annotation Term="Core.DefaultNamespace" Bool="true"/>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EntityContainer">
+        <Annotation Term="Common.Label" String="Charging Station"/>
+        <Annotation Term="Core.Description" String="Manage your charging stations"/>
+        <Annotation Term="Core.LongDescription" String="Retrieve charging station information, such as details related to your EVSEs (Electric Vehicle Supply Equipments)."/>
+        <Annotation Term="Authorization.Authorizations">
+          <Collection>
+            <Record Type="Authorization.OAuth2ClientCredentials">
+              <PropertyValue Property="Name" String="oAuth2"/>
+              <PropertyValue Property="Description" String="Authentication via OAuth2 with client credentials flow"/>
+              <PropertyValue Property="TokenUrl" String="https://{identityzone}.authentication.{region}.hana.ondemand.com/oauth/token"/>
+              <PropertyValue Property="Scopes">
+                <Collection>
+                  <Record Type="Authorization.AuthorizationScope">
+                    <PropertyValue Property="Scope" String="SAP_EMO_API_EVSE_READ"/>
+                    <PropertyValue Property="Description" String="Retrieves EVSEs."/>
+                  </Record>
+                  <Record Type="Authorization.AuthorizationScope">
+                    <PropertyValue Property="Scope" String="API_EVSE_READ"/>
+                    <PropertyValue Property="Description" String="Retrieves EVSEs."/>
+                  </Record>
+                  <Record Type="Authorization.AuthorizationScope">
+                    <PropertyValue Property="Scope" String="API_EVSE_UPDATE"/>
+                    <PropertyValue Property="Description" String="Updates EVSEs."/>
+                  </Record>
+                  <Record Type="Authorization.AuthorizationScope">
+                    <PropertyValue Property="Scope" String="API_CHARGINGSTATION_READ"/>
+                    <PropertyValue Property="Description" String="Retrieves charging stations."/>
+                  </Record>
+                  <Record Type="Authorization.AuthorizationScope">
+                    <PropertyValue Property="Scope" String="API_CHARGINGSTATION_TRANSFERDATA"/>
+                    <PropertyValue Property="Description" String="Transfers vendor-specific data to a charging station."/>
+                  </Record>
+                  <Record Type="Authorization.AuthorizationScope">
+                    <PropertyValue Property="Scope" String="API_CHARGINGSTATION_RESET"/>
+                    <PropertyValue Property="Description" String="Reboots (hard resets) and soft resets charging stations."/>
+                  </Record>
+                  <Record Type="Authorization.AuthorizationScope">
+                    <PropertyValue Property="Scope" String="API_CHARGINGSTATION_START"/>
+                    <PropertyValue Property="Description" String="Starts charging sessions on charging stations."/>
+                  </Record>
+                  <Record Type="Authorization.AuthorizationScope">
+                    <PropertyValue Property="Scope" String="API_CHARGINGSTATION_STOP"/>
+                    <PropertyValue Property="Description" String="Stops charging sessions on charging stations."/>
+                  </Record>
+                  <Record Type="Authorization.AuthorizationScope">
+                    <PropertyValue Property="Scope" String="API_CHARGINGSTATION_UPDATE"/>
+                    <PropertyValue Property="Description" String="Assigns a charging station to another site area."/>
+                  </Record>
+                  <Record Type="Authorization.AuthorizationScope">
+                    <PropertyValue Property="Scope" String="API_CHARGINGPLAN_CREATE"/>
+                    <PropertyValue Property="Description" String="Creates a charging plan for a charging station."/>
+                  </Record>
+                  <Record Type="Authorization.AuthorizationScope">
+                    <PropertyValue Property="Scope" String="API_CHARGINGPLAN_UPDATE"/>
+                    <PropertyValue Property="Description" String="Updates a charging plan for a charging station."/>
+                  </Record>
+                  <Record Type="Authorization.AuthorizationScope">
+                    <PropertyValue Property="Scope" String="API_CHARGINGPLAN_READ"/>
+                    <PropertyValue Property="Description" String="Retrieves charging plans."/>
+                  </Record>
+                  <Record Type="Authorization.AuthorizationScope">
+                    <PropertyValue Property="Scope" String="API_CHARGINGPLAN_DELETE"/>
+                    <PropertyValue Property="Description" String="Deletes charging plans."/>
+                  </Record>
+                </Collection>
+              </PropertyValue>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="Capabilities.BatchSupported" Bool="false"/>
+        <Annotation Term="Capabilities.DeepUpdateSupport">
+          <Record Type="Capabilities.DeepUpdateSupportType">
+            <PropertyValue Property="Supported" Bool="true"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations">
+        <Annotation Term="Common.Label" String="Charging Stations"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EntityContainer/ChargingStations">
+        <Annotation Term="Capabilities.ReadRestrictions">
+          <Record Type="Capabilities.ReadRestrictionsType">
+            <PropertyValue Property="Description" String="Retrieves a list of charging stations."/>
+            <PropertyValue Property="LongDescription" String="Use the following request to fetch data related to your charging stations."/>
+            <PropertyValue Property="ReadByKeyRestrictions">
+              <Record Type="Capabilities.ReadByKeyRestrictionsType">
+                <PropertyValue Property="Description" String="Retrieves a charging station with a specific identifier."/>
+                <PropertyValue Property="LongDescription" String="Use the following request to fetch data related to a charging station by providing its ID."/>
+              </Record>
+            </PropertyValue>
+            <PropertyValue Property="Readable" Bool="true"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/id">
+        <Annotation Term="Core.LongDescription" String="The charging station's unique identifier in SAP E-Mobility"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/name">
+        <Annotation Term="Core.LongDescription" String="The name of the charging station"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/registrationStatus">
+        <Annotation Term="Core.LongDescription" String="The registration status of the charging station"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/siteId">
+        <Annotation Term="Core.LongDescription" String="The site's unique identifier associated with the charging station"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/siteAreaId">
+        <Annotation Term="Core.LongDescription" String="The site area's unique identifier associated with the charging station"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/siteAreaName">
+        <Annotation Term="Core.LongDescription" String="The site area's name associated with the charging station"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/siteName">
+        <Annotation Term="Core.LongDescription" String="The site's name associated with the charging station"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/serialNumber">
+        <Annotation Term="Core.LongDescription" String="The serial number of the charging station"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/model">
+        <Annotation Term="Core.LongDescription" String="The model of the charging station"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/vendor">
+        <Annotation Term="Core.LongDescription" String="The vendor of the charging station"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/iccid">
+        <Annotation Term="Core.LongDescription" String="The charging station's ICCID (Integrated Circuit Card Identifier)"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/imsi">
+        <Annotation Term="Core.LongDescription" String="The charging station's IMSI (International Mobile Subscriber Identity)"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/meterType">
+        <Annotation Term="Core.LongDescription" String="The energy meter type used by the charging station"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/firmwareVersion">
+        <Annotation Term="Core.LongDescription" String="The firmware version installed on the charging station"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/firmwareUpdateStatus">
+        <Annotation Term="Core.LongDescription" String="The status of the charging station's firmware update process"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/meterSerialNumber">
+        <Annotation Term="Core.LongDescription" String="The serial number of the energy meter installed within the charging station"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/ocppVersion">
+        <Annotation Term="Core.LongDescription" String="The OCPP version of the charging station"/>
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="1.6"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/ocppFormat">
+        <Annotation Term="Core.LongDescription" String="The OCPP format of the charging station"/>
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="json"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/publicUrl">
+        <Annotation Term="Core.LongDescription" String="The URL the charging station connects to"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/lastSeenAt">
+        <Annotation Term="Core.LongDescription" String="The time stamp when the charging station was seen online for the last time"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/disabled">
+        <Annotation Term="Core.LongDescription" String="Indicates if the charging station has been disabled by a user."/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/manualConfiguration">
+        <Annotation Term="Core.LongDescription" String="Indicates if the charging station has been manually configured."/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/rebootedAt">
+        <Annotation Term="Core.LongDescription" String="The time stamp when the charging station was last rebooted"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/maximumPower">
+        <Annotation Term="Core.LongDescription" String="The maximum power of the charging station"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/voltage">
+        <Annotation Term="Core.LongDescription" String="The potential difference of the charging station expressed in volts (V)"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/excludedFromDynamicLoadManagement">
+        <Annotation Term="Core.LongDescription" String="Indicates if the charging station is excluded from dynamic load management."/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/ocppStandardParameters">
+        <Annotation Term="Core.Description" String="The standard parameters defined by the OCPP specification"/>
+        <Annotation Term="Core.LongDescription" String="The standard parameters defined by the OCPP specification"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/ocppVendorParameters">
+        <Annotation Term="Core.Description" String="The vendor-specific parameters that extend the standard OCPP specification"/>
+        <Annotation Term="Core.LongDescription" String="The vendor-specific parameters that extend the standard OCPP specification"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingStations/roaming">
+        <Annotation Term="Core.Description" String="The roaming status of the charging station"/>
+        <Annotation Term="Core.LongDescription" String="Indicates if the charging station is part of a roaming network."/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Reset(emobility.cpo.api.odata.ChargingStationService.ChargingStations)">
+        <Annotation Term="Core.Description" String="Reboots (hard resets) or soft resets a charging station."/>
+        <Annotation Term="Core.LongDescription" String="Use the following request to reboot (hard reset) a charging station if the type is set to 'Hard' or to soft reset a charging station if the type is set to 'Soft'."/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Reset(emobility.cpo.api.odata.ChargingStationService.ChargingStations)/type">
+        <Annotation Term="Validation.AllowedValues">
+          <Collection>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="Soft"/>
+              <PropertyValue Property="Value" String="Soft"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="Hard"/>
+              <PropertyValue Property="Value" String="Hard"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Reset(emobility.cpo.api.odata.ChargingStationService.ChargingStations)/$ReturnType">
+        <Annotation Term="Core.Description" String="OCPP Reset Response"/>
+        <Annotation Term="Core.LongDescription" String="OCPP Reset Response"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Start(emobility.cpo.api.odata.ChargingStationService.ChargingStations)">
+        <Annotation Term="Core.Description" String="Starts a charging session for a charging station and a badge."/>
+        <Annotation Term="Core.LongDescription" String="Use the following request to start a charging session for a charging station and a badge, which must be identified by its authentication ID."/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Start(emobility.cpo.api.odata.ChargingStationService.ChargingStations)/badgeAuthenticationId">
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="1234ABCD"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Start(emobility.cpo.api.odata.ChargingStationService.ChargingStations)/connectorId">
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="1"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Start(emobility.cpo.api.odata.ChargingStationService.ChargingStations)/$ReturnType">
+        <Annotation Term="Core.Description" String="OCPP Start Response"/>
+        <Annotation Term="Core.LongDescription" String="OCPP Start Response"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Stop(emobility.cpo.api.odata.ChargingStationService.ChargingStations)">
+        <Annotation Term="Core.Description" String="Stops a charging session running at a charging station."/>
+        <Annotation Term="Core.LongDescription" String="Use the following request to stop a charging session running at a charging station using the charging session ID."/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Stop(emobility.cpo.api.odata.ChargingStationService.ChargingStations)/chargingSessionId">
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="12345678"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Stop(emobility.cpo.api.odata.ChargingStationService.ChargingStations)/$ReturnType">
+        <Annotation Term="Core.Description" String="OCPP Stop Response"/>
+        <Annotation Term="Core.LongDescription" String="OCPP Stop Response"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.TransferData(emobility.cpo.api.odata.ChargingStationService.ChargingStations)">
+        <Annotation Term="Core.Description" String="Transfers vendor-specific data to a charging station."/>
+        <Annotation Term="Core.LongDescription" String="Use the following request to transfer vendor-specific data to a charging station."/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.TransferData(emobility.cpo.api.odata.ChargingStationService.ChargingStations)/data">
+        <Annotation Term="Core.Description" String="Data"/>
+        <Annotation Term="Core.LongDescription" String="Data"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.TransferData(emobility.cpo.api.odata.ChargingStationService.ChargingStations)/$ReturnType">
+        <Annotation Term="Core.Description" String="OCPP Transfer Data Response"/>
+        <Annotation Term="Core.LongDescription" String="OCPP Transfer Data Response"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChangeSiteArea(emobility.cpo.api.odata.ChargingStationService.ChargingStations)">
+        <Annotation Term="Core.Description" String="Assigns a charging station to another site area."/>
+        <Annotation Term="Core.LongDescription" String="Use the following request to assign a charging station to another site area."/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChangeSiteArea(emobility.cpo.api.odata.ChargingStationService.ChargingStations)/siteAreaId">
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="edff4c31-aa58-4801-8c46-972a78b93d4d"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChangeRoamingFlag(emobility.cpo.api.odata.ChargingStationService.ChargingStations)">
+        <Annotation Term="Core.Description" String="Assigns a charging station to roaming."/>
+        <Annotation Term="Core.LongDescription" String="Use the following request to assign a charging station to roaming."/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChangeRoamingFlag(emobility.cpo.api.odata.ChargingStationService.ChargingStations)/roaming">
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="true"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Connectors">
+        <Annotation Term="Common.Label" String="Connectors"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EntityContainer/Connectors">
+        <Annotation Term="Capabilities.ReadRestrictions">
+          <Record Type="Capabilities.ReadRestrictionsType">
+            <PropertyValue Property="Readable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Connectors/connectorId">
+        <Annotation Term="Core.LongDescription" String="The unique identifier of the connector"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Connectors/type">
+        <Annotation Term="Core.LongDescription" String="The charging system type of the connector"/>
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="CCS"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Connectors/currentType">
+        <Annotation Term="Core.LongDescription" String="Indicates if the connector uses alternating current or direct current."/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Connectors/voltage">
+        <Annotation Term="Core.LongDescription" String="The potential difference of the connector expressed in volts (V)"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Connectors/numberOfPhases">
+        <Annotation Term="Core.LongDescription" String="The number of phases used by the connector"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Connectors/evseIndex">
+        <Annotation Term="Core.LongDescription" String="The index of the EVSE to which the connector belongs"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Connectors/current">
+        <Annotation Term="Core.LongDescription" String="The electric current of the connector expressed in amperes (A)"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Connectors/currentLimit">
+        <Annotation Term="Core.LongDescription" String="The current limit for the connector expressed in amperes (A), based on the load management configuration"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Connectors/status">
+        <Annotation Term="Core.LongDescription" String="The connector status received from the charging station"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Connectors/maximumPower">
+        <Annotation Term="Core.LongDescription" String="The maximum power of the connector"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Coordinates">
+        <Annotation Term="Common.Label" String="Coordinates"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EntityContainer/Coordinates">
+        <Annotation Term="Capabilities.ReadRestrictions">
+          <Record Type="Capabilities.ReadRestrictionsType">
+            <PropertyValue Property="Readable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Coordinates/latitude">
+        <Annotation Term="Core.LongDescription" String="The latitude of the site in decimal degrees"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Coordinates/longitude">
+        <Annotation Term="Core.LongDescription" String="The longitude of the site in decimal degrees"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Addresses">
+        <Annotation Term="Common.Label" String="Addresses"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EntityContainer/Addresses">
+        <Annotation Term="Capabilities.ReadRestrictions">
+          <Record Type="Capabilities.ReadRestrictionsType">
+            <PropertyValue Property="Readable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Addresses/number">
+        <Annotation Term="Core.LongDescription" String="The number of the building (residential or commercial) that follows or precedes the street name in the site address"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Addresses/street">
+        <Annotation Term="Core.LongDescription" String="The name of the street where the site is located"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Addresses/postalCode">
+        <Annotation Term="Core.LongDescription" String="The postal code, ZIP code, or post code in the site address"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Addresses/city">
+        <Annotation Term="Core.LongDescription" String="The name of the city or town in which the site is located"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Addresses/countryCode">
+        <Annotation Term="Core.LongDescription" String="The ISO 3166-1 alpha-2 country code for the Country/Region where the site is located"/>
+        <Annotation Term="Common.Text" Path="name"/>
+        <Annotation Term="Common.Label" String="{i18n>CountryCode}"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Addresses/country">
+        <Annotation Term="Core.LongDescription" String="The Country/Region where the site is located"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>Name}"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Addresses/state">
+        <Annotation Term="Core.LongDescription" String="The State/Region where the site is located"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EvseLocations">
+        <Annotation Term="Common.Label" String="EVSE Locations"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EntityContainer/EvseLocations">
+        <Annotation Term="Capabilities.ReadRestrictions">
+          <Record Type="Capabilities.ReadRestrictionsType">
+            <PropertyValue Property="Readable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EvseLocations/parkingLevel">
+        <Annotation Term="Core.LongDescription" String="The floor of the parking facility on which the EVSE is located"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EvseLocations/parkingName">
+        <Annotation Term="Core.LongDescription" String="The name of the parking facility where the EVSE is located"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EvseLocations/parkingSpace">
+        <Annotation Term="Core.LongDescription" String="The name or identifier of the parking spot where the EVSE is located, and where a vehicle can charge"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EvseLocations/companyId">
+        <Annotation Term="Core.LongDescription" String="The unique identifier of the company to which the EVSE belongs"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EvseLocations/siteId">
+        <Annotation Term="Core.LongDescription" String="The unique identifier of the site where the EVSE is located"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EvseLocations/siteName">
+        <Annotation Term="Core.LongDescription" String="The name of the site where the EVSE is located"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EvseLocations/siteAreaId">
+        <Annotation Term="Core.LongDescription" String="The unique identifier of the site area where the EVSE is located"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EvseLocations/siteAreaName">
+        <Annotation Term="Core.LongDescription" String="The name of the site area where the EVSE is located"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EvseLocations/address">
+        <Annotation Term="Core.LongDescription" String="The address of the site where the EVSE is located"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EvseLocations/coordinates">
+        <Annotation Term="Core.LongDescription" String="The coordinates of the site where the EVSE is located"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Evses">
+        <Annotation Term="Common.Label" String="EVSEs"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EntityContainer/Evses">
+        <Annotation Term="Capabilities.ReadRestrictions">
+          <Record Type="Capabilities.ReadRestrictionsType">
+            <PropertyValue Property="Description" String="Retrieves a list of EVSEs."/>
+            <PropertyValue Property="LongDescription" String="Use the following request to fetch data related to your charging station EVSEs. &lt;br>An EVSE (Electric Vehicle Supply Equipment) is the independently operated and managed part of a charging station that can deliver energy to one vehicle at a time."/>
+            <PropertyValue Property="ReadByKeyRestrictions">
+              <Record Type="Capabilities.ReadByKeyRestrictionsType">
+                <PropertyValue Property="Description" String="Retrieves an EVSE with a specific identifier."/>
+                <PropertyValue Property="LongDescription" String="Use the following request to fetch data related to the EVSE of a charging station by providing the EVSE ID. &lt;br>An EVSE (Electric Vehicle Supply Equipment) is the independently operated and managed part of a charging station that can deliver energy to one vehicle at a time."/>
+              </Record>
+            </PropertyValue>
+            <PropertyValue Property="Readable" Bool="true"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Description" String="Updates an EVSE."/>
+            <PropertyValue Property="LongDescription" String="Use the following request to update an EVSE. &lt;br>An EVSE (Electric Vehicle Supply Equipment) is the independently operated and managed part of a charging station that can deliver energy to one vehicle at a time."/>
+            <PropertyValue Property="Updatable" Bool="true"/>
+            <PropertyValue Property="UpdateMethod" EnumMember="Capabilities.HttpMethod/PATCH"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Evses/id">
+        <Annotation Term="Core.LongDescription" String="The unique identifier of the EVSE"/>
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Evses/emi3Id">
+        <Annotation Term="Core.LongDescription" String="The eMI³ ID of the EVSE"/>
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="DE*ABC*E1a2b3c"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Validation.Pattern" String="(^$)|^[A-Za-z]{2}\*[0-9A-Za-z]{3}\*E[0-9A-Za-z][0-9A-Za-z\*]{0,30}$"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Evses/index">
+        <Annotation Term="Core.LongDescription" String="The index of the EVSE"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Evses/code">
+        <Annotation Term="Core.LongDescription" String="The unique identifier used to identify and locate the EVSE"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Evses/name">
+        <Annotation Term="Core.LongDescription" String="The user-friendly name used to identify and categorize the EVSE. The name doesn't have to be unique."/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Evses/parking">
+        <Annotation Term="Core.LongDescription" String="The name of the parking facility where the EVSE is located"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Evses/parkingLevel">
+        <Annotation Term="Core.LongDescription" String="The floor of the parking facility on which the EVSE is located"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Evses/parkingSpace">
+        <Annotation Term="Core.LongDescription" String="The name or identifier of the parking spot where the EVSE is located, and where a vehicle can charge"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Evses/chargingStationId">
+        <Annotation Term="Core.LongDescription" String="The unique identifier of the charging station to which the EVSE belongs"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Evses/chargingStationName">
+        <Annotation Term="Core.LongDescription" String="The name of the charging station to which the EVSE belongs"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Evses/connectors">
+        <Annotation Term="Core.LongDescription" String="The connectors belonging to the EVSE, and their technical information"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Evses/location">
+        <Annotation Term="Core.LongDescription" String="Information related to where the EVSE is located"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Evses/chargingStation">
+        <Annotation Term="Core.LongDescription" String="The charging station to which the EVSE belongs, and its technical information"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingSchedule">
+        <Annotation Term="Common.Label" String="Schedule"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingSchedule/totalDuration">
+        <Annotation Term="Core.LongDescription" String="The duration of the charging plan in seconds, meaning the sum of all its period durations"/>
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" Int="1500"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingSchedule/startTime">
+        <Annotation Term="Core.Description" String="The start time of the charging plan"/>
+        <Annotation Term="Core.LongDescription" String="The start time of the charging plan"/>
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="2022-04-29T22:00:00.000Z"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingSchedule/periods">
+        <Annotation Term="Core.Description" String="The list of periods within the charging plan schedule"/>
+        <Annotation Term="Core.LongDescription" String="The list of periods within the charging plan schedule"/>
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="[{&quot;startPeriod&quot;:0,&quot;limit&quot;:96, &quot;numberPhases&quot;:3},{&quot;startPeriod&quot;:3600,&quot;limit&quot;:150, &quot;numberPhases&quot;:3}]"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Profile">
+        <Annotation Term="Common.Label" String="Profile"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Profile/recurrencePattern">
+        <Annotation Term="Core.Description" String="Indicates how often a charging plan repeats itself. The possible values are None, Daily, Weekly."/>
+        <Annotation Term="Core.LongDescription" String="Indicates how often a charging plan repeats itself. The possible values are None, Daily, Weekly."/>
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="Daily"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Profile/chargingSessionId">
+        <Annotation Term="Core.Description" String="The unique identifier of the charging session"/>
+        <Annotation Term="Core.LongDescription" String="The unique identifier of the charging session"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.Profile/schedule">
+        <Annotation Term="Core.Description" String="The date and time the charging plan was started and its duration"/>
+        <Annotation Term="Core.LongDescription" String="The date and time the charging plan was started and its duration"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingPlans">
+        <Annotation Term="Common.Label" String="Charging Plans"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.EntityContainer/ChargingPlans">
+        <Annotation Term="Capabilities.ReadRestrictions">
+          <Record Type="Capabilities.ReadRestrictionsType">
+            <PropertyValue Property="Description" String="Retrieves a list of charging plans."/>
+            <PropertyValue Property="LongDescription" String="Use the following request to fetch data related to your charging plans."/>
+            <PropertyValue Property="ReadByKeyRestrictions">
+              <Record Type="Capabilities.ReadByKeyRestrictionsType">
+                <PropertyValue Property="Description" String="Retrieves a charging plan with a specific identifier."/>
+                <PropertyValue Property="LongDescription" String="Use the following request to fetch data related to a charging plan by providing its ID."/>
+              </Record>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Description" String="Creates a charging plan."/>
+            <PropertyValue Property="LongDescription" String="Use the following request to create a charging plan."/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Description" String="Updates a charging plan."/>
+            <PropertyValue Property="LongDescription" String="Use the following request to update a charging plan."/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Description" String="Deletes a charging plan."/>
+            <PropertyValue Property="LongDescription" String="Use the following request to delete a charging plan by providing its ID."/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.NavigationRestrictions">
+          <Record Type="Capabilities.NavigationRestrictionsType">
+            <PropertyValue Property="Navigability" EnumMember="Capabilities.NavigationType/None"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingPlans/id">
+        <Annotation Term="Core.LongDescription" String="The unique identifier of the charging plan"/>
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="5bc92bcc"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingPlans/evseIndex">
+        <Annotation Term="Core.LongDescription" String="The index of the EVSE"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingPlans/connectorId">
+        <Annotation Term="Core.LongDescription" String="The unique identifier of the connector"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingPlans/chargingStationId">
+        <Annotation Term="Core.LongDescription" String="The unique identifier of the charging station"/>
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.ChargingPlans/profile">
+        <Annotation Term="Core.LongDescription" String="Provides the charging session for which the charging plan was used, and the recurrence and schedule details."/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPResetResponse">
+        <Annotation Term="Core.Description" String="OCPP Reset Response"/>
+        <Annotation Term="Core.LongDescription" String="OCPP Reset Response"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPResetResponse/responseCode">
+        <Annotation Term="Core.LongDescription" String="The custom code of the OCPP command response"/>
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="1900"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Validation.AllowedValues">
+          <Collection>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="ACCEPTED"/>
+              <PropertyValue Property="Value" Int="1900"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="REJECTED"/>
+              <PropertyValue Property="Value" Int="1910"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="CHARGING_STATION_NOT_CONNECTED"/>
+              <PropertyValue Property="Value" Int="2900"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="OCPP_SERVER_ERROR"/>
+              <PropertyValue Property="Value" Int="3000"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="TIMEOUT"/>
+              <PropertyValue Property="Value" Int="3900"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="UNKNOWN_TOKEN"/>
+              <PropertyValue Property="Value" Int="2004"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="NOT_AUTHORIZED_TOKEN"/>
+              <PropertyValue Property="Value" Int="2910"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="EXPIRED_TOKEN"/>
+              <PropertyValue Property="Value" Int="2911"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPResetResponse/responseMessage">
+        <Annotation Term="Core.LongDescription" String="Information about the OCPP command response"/>
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="Accepted"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPResetResponse/timestamp">
+        <Annotation Term="Core.LongDescription" String="The time stamp when the OCPP command response was sent"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPResetResponse/responseData">
+        <Annotation Term="Core.LongDescription" String="The payload of the OCPP command response"/>
+        <Annotation Term="Core.Description" String="OCPP Response Data"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_ResponseData">
+        <Annotation Term="Core.Description" String="OCPP Response Data"/>
+        <Annotation Term="Core.LongDescription" String="OCPP Response Data"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_ResponseData/status">
+        <Annotation Term="Core.LongDescription" String="The status of the OCPP response"/>
+        <Annotation Term="Validation.AllowedValues">
+          <Collection>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="Accepted"/>
+              <PropertyValue Property="Value" String="Accepted"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="Rejected"/>
+              <PropertyValue Property="Value" String="Rejected"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPStartResponse">
+        <Annotation Term="Core.Description" String="OCPP Start Response"/>
+        <Annotation Term="Core.LongDescription" String="OCPP Start Response"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPStartResponse/responseCode">
+        <Annotation Term="Core.LongDescription" String="The custom code of the OCPP command response"/>
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="1900"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Validation.AllowedValues">
+          <Collection>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="ACCEPTED"/>
+              <PropertyValue Property="Value" Int="1900"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="REJECTED"/>
+              <PropertyValue Property="Value" Int="1910"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="CHARGING_STATION_NOT_CONNECTED"/>
+              <PropertyValue Property="Value" Int="2900"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="OCPP_SERVER_ERROR"/>
+              <PropertyValue Property="Value" Int="3000"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="TIMEOUT"/>
+              <PropertyValue Property="Value" Int="3900"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="UNKNOWN_TOKEN"/>
+              <PropertyValue Property="Value" Int="2004"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="NOT_AUTHORIZED_TOKEN"/>
+              <PropertyValue Property="Value" Int="2910"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="EXPIRED_TOKEN"/>
+              <PropertyValue Property="Value" Int="2911"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPStartResponse/responseMessage">
+        <Annotation Term="Core.LongDescription" String="Information about the OCPP command response"/>
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="Accepted"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPStartResponse/timestamp">
+        <Annotation Term="Core.LongDescription" String="The time stamp when the OCPP command response was sent"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPStartResponse/responseData">
+        <Annotation Term="Core.LongDescription" String="The payload of the OCPP command response"/>
+        <Annotation Term="Core.Description" String="OCPP Response Data"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPStopResponse">
+        <Annotation Term="Core.Description" String="OCPP Stop Response"/>
+        <Annotation Term="Core.LongDescription" String="OCPP Stop Response"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPStopResponse/responseCode">
+        <Annotation Term="Core.LongDescription" String="The custom code of the OCPP command response"/>
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="1900"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Validation.AllowedValues">
+          <Collection>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="ACCEPTED"/>
+              <PropertyValue Property="Value" Int="1900"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="REJECTED"/>
+              <PropertyValue Property="Value" Int="1910"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="CHARGING_STATION_NOT_CONNECTED"/>
+              <PropertyValue Property="Value" Int="2900"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="OCPP_SERVER_ERROR"/>
+              <PropertyValue Property="Value" Int="3000"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="TIMEOUT"/>
+              <PropertyValue Property="Value" Int="3900"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="UNKNOWN_TOKEN"/>
+              <PropertyValue Property="Value" Int="2004"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="NOT_AUTHORIZED_TOKEN"/>
+              <PropertyValue Property="Value" Int="2910"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="EXPIRED_TOKEN"/>
+              <PropertyValue Property="Value" Int="2911"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPStopResponse/responseMessage">
+        <Annotation Term="Core.LongDescription" String="Information about the OCPP command response"/>
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="Accepted"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPStopResponse/timestamp">
+        <Annotation Term="Core.LongDescription" String="The time stamp when the OCPP command response was sent"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPStopResponse/responseData">
+        <Annotation Term="Core.LongDescription" String="The payload of the OCPP command response"/>
+        <Annotation Term="Core.Description" String="OCPP Response Data"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPDataTransferResponse">
+        <Annotation Term="Core.Description" String="OCPP Transfer Data Response"/>
+        <Annotation Term="Core.LongDescription" String="OCPP Transfer Data Response"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPDataTransferResponse/responseCode">
+        <Annotation Term="Core.LongDescription" String="The custom code of the OCPP command response"/>
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="1900"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Validation.AllowedValues">
+          <Collection>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="ACCEPTED"/>
+              <PropertyValue Property="Value" Int="1900"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="REJECTED"/>
+              <PropertyValue Property="Value" Int="1910"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="CHARGING_STATION_NOT_CONNECTED"/>
+              <PropertyValue Property="Value" Int="2900"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="OCPP_SERVER_ERROR"/>
+              <PropertyValue Property="Value" Int="3000"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="TIMEOUT"/>
+              <PropertyValue Property="Value" Int="3900"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="UNKNOWN_TOKEN"/>
+              <PropertyValue Property="Value" Int="2004"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="NOT_AUTHORIZED_TOKEN"/>
+              <PropertyValue Property="Value" Int="2910"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="EXPIRED_TOKEN"/>
+              <PropertyValue Property="Value" Int="2911"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPDataTransferResponse/responseMessage">
+        <Annotation Term="Core.LongDescription" String="Information about the OCPP command response"/>
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="Accepted"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPDataTransferResponse/timestamp">
+        <Annotation Term="Core.LongDescription" String="The time stamp when the OCPP command response was sent"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_OCPPDataTransferResponse/responseData">
+        <Annotation Term="Core.LongDescription" String="The payload of the OCPP command response"/>
+        <Annotation Term="Core.Description" String="OCPP Data Transfer Response Data"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_TransferResponseData">
+        <Annotation Term="Core.Description" String="OCPP Data Transfer Response Data"/>
+        <Annotation Term="Core.LongDescription" String="OCPP Data Transfer Response Data"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_TransferResponseData/status">
+        <Annotation Term="Core.LongDescription" String="The status of the OCPP response"/>
+        <Annotation Term="Validation.AllowedValues">
+          <Collection>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="Accepted"/>
+              <PropertyValue Property="Value" String="Accepted"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="Rejected"/>
+              <PropertyValue Property="Value" String="Rejected"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="UnknownMessageId"/>
+              <PropertyValue Property="Value" String="UnknownMessageId"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="UnknownVendorId"/>
+              <PropertyValue Property="Value" String="UnknownVendorId"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_TransferResponseData/data">
+        <Annotation Term="Core.LongDescription" String="The data of the OCPP response"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_Data">
+        <Annotation Term="Core.Description" String="Data"/>
+        <Annotation Term="Core.LongDescription" String="Data"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_Data/vendorId">
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="org.example.csms"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Core.LongDescription" String="The unique identifier of the charging station vendor"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_Data/messageId">
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="unavailable_period"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Core.LongDescription" String="The technical identifier of the message parameter, as defined by the charging station vendor"/>
+      </Annotations>
+      <Annotations Target="emobility.cpo.api.odata.ChargingStationService.emobility_cpo_api_odata_Data/data">
+        <Annotation Term="Core.Example">
+          <Record Type="Core.PrimitiveExampleValue">
+            <PropertyValue Property="Value" String="{\&quot;start\&quot;: \&quot;11:00\&quot;,\&quot;stop\&quot;: \&quot;13:30\&quot;}"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Core.LongDescription" String="The values provided for the data transfer"/>
+      </Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

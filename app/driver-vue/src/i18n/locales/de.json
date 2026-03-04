@@ -1,0 +1,215 @@
+{
+  "navigation": {
+    "home": "Startseite",
+    "stations": "Ladestationen",
+    "sessions": "Sitzungen",
+    "badges": "Ausweise",
+    "refresh": "Aktualisieren"
+  },
+  "common": {
+    "unknown": "Unbekannt",
+    "loading": "Wird geladen...",
+    "dismiss": "Schließen",
+    "try_again": "Erneut versuchen",
+    "reload_page": "Seite neu laden",
+    "connecting": "Verbinden...",
+    "login": "Anmelden"
+  },
+  "buttons": {
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen",
+    "dismiss": "Schließen",
+    "goto_home": "Zur Startseite",
+    "goto_sessions": "Sitzungen anzeigen",
+    "goto_stations": "Ladepunkte anzeigen",
+    "view_on_map": "Auf Karte anzeigen",
+    "view_all_history": "Verlauf anzeigen",
+    "stop": "Stopp",
+    "stop_session": "Sitzung beenden"
+  },
+  "session": {
+    "id": "ID",
+    "date": "Datum",
+    "energy": "Energie",
+    "duration": "Dauer",
+    "location": "Standort",
+    "charging_in_progress": "Ladevorgang läuft",
+    "finishing": "Wird beendet",
+    "start": "Starten",
+    "starting": "Wird gestartet...",
+    "start_session_title": "Sitzung starten",
+    "start_session_confirm": "Möchten Sie eine Sitzung starten?",
+    "start_session_success": "Ladesitzung akzeptiert. Sie können Ihr Kabel einstecken",
+    "errors": {
+      "start_failed": "Fehler beim Starten der Ladesitzung",
+      "evse_not_found": "Ladepunkt nicht gefunden",
+      "no_connectors": "Keine Anschlüsse verfügbar",
+      "timeout": "Zeitüberschreitung beim Sitzungsstart - bitte erneut versuchen",
+      "warning": "Ladesitzung konnte nicht gestartet werden",
+      "backend": "Backend-Fehler aufgetreten",
+      "generic": "Beim Starten der Sitzung ist ein Fehler aufgetreten"
+    },
+    "preparing_action_required": "Ladesitzung akzeptiert. Bitte schließen Sie Ihr Kabel an oder drücken Sie die Starttaste an der Station",
+    "timeout_info": "Sitzung gestartet, dauert aber länger als erwartet. Überprüfen Sie die Ladestation.",
+    "start_warning": "Sitzung akzeptiert, aber Ladevorgang nicht gestartet. Bitte überprüfen Sie die Station.",
+    "start_success": "Ladevorgang erfolgreich gestartet"
+  },
+  "dashboard": {
+    "all_available_stations": "Verfügbare Ladepunkte",
+    "eco_balance": "Öko-Bilanz",
+    "emissions_avoided": "vermiedene Emissionen",
+    "this_month_stats": "Statistiken dieses Monats",
+    "sessions": "Sitzung | Sitzungen",
+    "spent": "Ausgegeben",
+    "recent_charges": "Keine aktuellen Sitzungen | Aktuelle Sitzung | Aktuelle Sitzungen"
+  },
+  "pages": {
+    "no_badges_found": "Keine Ausweise gefunden",
+    "no_charging_stations_found": "Keine Ladepunkte gefunden",
+    "no_station_data": "Keine Ladepunkt-Daten",
+    "searching_for_charging_stations": "Suche nach Ladepunkten...",
+    "loading_evse_details": "Ladepunkt-Details werden geladen..."
+  },
+  "login": {
+    "title": "Anmelden",
+    "ready_to_charge": "Bereit, Ihre Sitzung aufzuladen?",
+    "charging_up_connection": "Verbindung wird aufgebaut...",
+    "circuit_breaker_tripped": "Sicherung ausgelöst!",
+    "connect_to_grid": "Verbinden Sie sich mit dem Netz und starten Sie Ihr E-Mobility-Erlebnis! Ihre elektrische Reise wartet auf Sie.",
+    "establishing_connection": "Sichere Verbindung zum E-Mobility-Netz wird aufgebaut...",
+    "connection_error": "Etwas ist mit der Verbindung schiefgelaufen. Keine Sorge - selbst die besten Ladestationen brauchen manchmal einen Neustart!"
+  },
+  "company": {
+    "name": "E-Mobility"
+  },
+  "map": {
+    "text": "Karte",
+    "list": "Liste"
+  },
+  "address": {
+    "title": "Adresse",
+    "number": "Nummer:",
+    "street": "Straße:",
+    "postal_code": "Postleitzahl:",
+    "city": "Stadt:",
+    "country_code": "Ländercode:",
+    "country": "Land:",
+    "state": "Bundesland:",
+    "latitude": "Breitengrad:",
+    "longitude": "Längengrad:"
+  },
+  "location": {
+    "location_and_map": "Standort & Karte"
+  },
+  "station": {
+    "charging_station_name": "Name der Ladestation",
+    "emi3_id": "eMI3",
+    "stations": "Ladestationen",
+    "evse": "Ladepunkte",
+    "connectors": "Steckverbinder",
+    "connector_current_limit": "Stromgrenze",
+    "connector_current_type": "Stromtyp",
+    "connector_current": "Strom",
+    "connector_evse_index": "Ladepunkt-Index",
+    "connector_id": "ID",
+    "connector_max_power": "Max. Leistung",
+    "connector_phases": "Phasen",
+    "connector_status": "Status",
+    "connector_type": "Typ",
+    "connector_voltage": "Spannung",
+    "no_code": "Kein Code",
+    "site": "Standort",
+    "area": "Bereich",
+    "parking": "Parkplatz",
+    "level": "Ebene",
+    "space": "Platz",
+    "type": "Typ",
+    "power": "Leistung"
+  },
+  "filter": {
+    "all_stations": "Alle Ladepunkte",
+    "available_only": "Nur verfügbare Ladepunkte",
+    "available_fast_chargers": "Nur verfügbare Schnelllader",
+    "all": "Alle",
+    "available": "Verfügbar",
+    "fast": "Schnell",
+    "sort_ascending": "Aufsteigend sortieren",
+    "sort_descending": "Absteigend sortieren",
+    "hide_additional_filters": "Zusätzliche Filter ausblenden",
+    "show_additional_filters": "Zusätzliche Filter anzeigen",
+    "clear_all_filters": "Alle Filter löschen",
+    "location_active": "Standort aktiv",
+    "clear_all_filters_title": "Alle Filter löschen",
+    "locating": "Ortung...",
+    "near_me": "In meiner Nähe",
+    "search_placeholder": "Ladepunkte, Städte, Bereiche suchen...",
+    "charge_points": "Ladepunkte",
+    "places": "Orte",
+    "month": "Monat",
+    "year": "Jahr",
+    "time_filter": "Zeitfilter"
+  },
+  "list": {
+    "load_more_results": "Weitere Ergebnisse laden",
+    "showing_count": "{current} von {total} angezeigt",
+    "other": "Andere"
+  },
+  "status": {
+    "preparing": "Vorbereitung",
+    "occupied": "Belegt",
+    "reserved": "Reserviert",
+    "outoforder": "Außer Betrieb",
+    "inoperative": "Nicht betriebsbereit",
+    "disconnected": "Getrennt"
+  },
+  "badge": {
+    "authentication_id": "Authentifizierungs-ID",
+    "first_name": "Vorname",
+    "last_name": "Nachname",
+    "car_license": "Kfz-Kennzeichen",
+    "active": "Aktiv",
+    "expired": "Abgelaufen"
+  },
+  "messages": {
+    "available_evses": "Keine Ladepunkte verfügbar | Ladepunkt verfügbar | Ladepunkte verfügbar",
+    "available_stations": "Keine Ladepunkte verfügbar | Ladepunkt verfügbar | Ladepunkte verfügbar",
+    "confirm_stop_session": "Möchten Sie die Sitzung beenden?",
+    "latest_sessions": "Neueste Sitzungen",
+    "no_data_message": "Alles ist verbunden, aber es gibt gerade nichts anzuzeigen. Schauen Sie bald wieder vorbei für mehr elektrische Action!",
+    "no_data_title": "Sicherung nicht durchgebrannt — nur keine Daten!",
+    "no_sessions": "Keine Sitzungen gefunden",
+    "toast_session_stopped": "Die Ladesitzung wurde beendet, Sie können Ihr Kabel abziehen."
+  },
+  "settings": {
+    "language": "Sprache"
+  },
+  "language": {
+    "english": "Englisch",
+    "french": "Französisch",
+    "german": "Deutsch"
+  },
+  "qr": {
+    "title": "Schnellstart",
+    "scan_title": "QR-Code scannen zum Laden starten",
+    "scan_description": "Richten Sie Ihre Kamera auf den QR-Code am Ladepunkt",
+    "scan_button": "Scannen",
+    "browse_stations": "Ladepunkte durchsuchen",
+    "decrypting": "QR-Code wird entschlüsselt...",
+    "processing": "Ladesitzung wird gestartet...",
+    "errors": {
+      "network_error": "QR-Code kann nicht entschlüsselt werden: Netzwerkverbindung fehlgeschlagen",
+      "invalid_qr": "Ungültiger oder beschädigter QR-Code",
+      "decryption_failed": "QR-Code-Entschlüsselung fehlgeschlagen: Ungültiger oder abgelaufener Code",
+      "server_error": "QR-Code-Service vorübergehend nicht verfügbar",
+      "generic_decrypt": "QR-Code-Entschlüsselung fehlgeschlagen",
+      "missing_data": "Verschlüsselte Daten in QR-URL fehlen",
+      "missing_parameters": "Erforderliche Parameter in QR-URL fehlen",
+      "invalid_connector": "Ungültige Steckverbinder-ID in QR-URL",
+      "invalid_url": "Ungültiges QR-URL-Format",
+      "invalid_format": "Ungültiges QR-Code-Format: kein gültiger E-Mobility-QR-Code",
+      "missing_fields": "Ungültiges QR-Code-Format: erforderliche Felder fehlen",
+      "incorrect_types": "Ungültiges QR-Code-Format: falsche Datentypen",
+      "scan_failed": "QR-Code-Scan fehlgeschlagen"
+    }
+  }
+}

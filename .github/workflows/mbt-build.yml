@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: 2026 SAP SE or an SAP affiliate company and e-mobility-driver-app contributors
+# SPDX-License-Identifier: Apache-2.0
+
+name: MBT Build
+
+on:
+  workflow_call:
+
+jobs:
+  mbt-build:
+    runs-on: [self-hosted, solinas-ubuntu_22_04]
+    container: devxci/mbtci-java17-node20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install mbt
+        run: npm install -g mbt
+      - name: Run mbt build
+        run: mbt build
+

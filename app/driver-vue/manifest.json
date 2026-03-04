@@ -1,0 +1,48 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "driver-vue",
+    "type": "application",
+    "applicationVersion": {
+      "version": "1.0.0"
+    },
+    "title": "Driver Vue",
+    "description": "Driver Vue Application",
+    "crossNavigation": {
+      "inbounds": {
+        "driver-vue-inbound": {
+          "signature": {
+            "parameters": {
+              "source": {}
+            },
+            "additionalParameters": "allowed"
+          },
+          "semanticObject": "driver",
+          "action": "display",
+          "title": "{{flpTitle}}",
+          "icon": "sap-icon://history"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "HTML5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "driverui"
+  }
+}

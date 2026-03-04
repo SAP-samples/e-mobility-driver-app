@@ -1,0 +1,246 @@
+# Cline Rules for E-Mobility Driver App
+
+## Project Overview
+
+This is a Vue.js-based e-mobility driver application with TypeScript, featuring charging station management, session tracking, badge management, and user authentication.
+
+## Core Development Principles
+
+### Keep It Simple
+
+- Avoid over-engineering solutions
+- Use built-in HTML form validation where possible
+- Minimize external dependencies
+- Focus on core functionality first
+- Avoid complex state management patterns until necessary
+- No premature optimization
+
+### Code Quality Standards
+
+- Follow TypeScript strict mode requirements
+- Use ESLint and Prettier configurations consistently
+- Maintain test coverage for critical functionality
+- Write self-documenting code with clear naming
+- Keep functions small and focused on single responsibilities
+
+## Vue.js Specific Guidelines
+
+### Component Structure
+
+- Use Composition API for new components
+- Keep components focused on single concerns
+- Use `defineProps` and `defineEmits` with TypeScript
+- Prefer `<script setup>` syntax for cleaner code
+- Extract reusable logic into composables (`src/composables/`)
+
+### State Management
+
+- Use Pinia stores for global state (`src/store/`)
+- Keep stores focused on specific domains (badges, sessions, users, etc.)
+- Use composables for component-level reactive state
+- Avoid prop drilling - use provide/inject when appropriate
+
+### Styling
+
+- Use scoped styles in components
+- Follow existing CSS patterns and naming conventions
+- Consider responsive design for mobile/desktop views
+- Maintain consistency with UI5 design system
+
+## TypeScript Guidelines
+
+### Type Safety
+
+- Define proper interfaces for all data structures
+- Use the existing type definitions in `types/` directory
+- Avoid `any` type - use proper typing or `unknown`
+- Leverage union types and optional properties appropriately
+
+### File Organization
+
+- Keep type definitions in dedicated `.d.ts` files
+- Export types from appropriate modules
+- Use barrel exports for cleaner imports
+
+## Testing Standards
+
+### Unit Tests
+
+- Write tests for all new components and composables
+- Use Vitest/Jest with Vue Test Utils
+- Focus on behavior testing over implementation details
+- Mock external dependencies appropriately
+- Maintain existing test patterns in `test/` directories
+
+### Test Organization
+
+- Mirror source directory structure in test directories
+- Use descriptive test names that explain the scenario
+- Group related tests using `describe` blocks
+- Test both happy path and error scenarios
+
+## API and Service Guidelines
+
+### CDS Services
+
+- Follow existing patterns in `srv/` directory
+- Use proper error handling and validation
+- Implement appropriate authorization checks
+- Document service endpoints and data models
+
+### External Services
+
+- Use the existing external service patterns
+- Implement proper token handling
+- Add appropriate error handling and retries
+- Cache responses when appropriate
+
+### OData Integration
+
+- Use existing OData utilities in `src/utils/odata/`
+- Follow OData query patterns consistently
+- Handle pagination and filtering properly
+
+## File and Directory Structure
+
+### Organization Principles
+
+- Group related files by feature/domain
+- Use consistent naming conventions
+- Keep shared utilities in appropriate directories
+- Separate concerns between components, pages, and services
+
+### Import Guidelines
+
+- Use relative imports for local files
+- Use absolute imports for shared utilities
+- Group imports: external libraries, internal modules, types
+- Remove unused imports
+
+## Security Considerations
+
+### Authentication
+
+- Use existing XSUAA integration patterns
+- Implement proper session management
+- Follow SAP BTP security guidelines
+- Validate user permissions appropriately
+
+### Data Handling
+
+- Sanitize user inputs
+- Use proper error messages that don't leak sensitive information
+- Follow GDPR/privacy requirements for user data
+
+## Performance Guidelines
+
+### Bundle Optimization
+
+- Use dynamic imports for route-based code splitting
+- Optimize images and assets
+- Minimize bundle size with tree shaking
+- Use Vite build optimizations
+
+### Runtime Performance
+
+- Implement virtual scrolling for large lists
+- Use proper caching strategies
+- Avoid memory leaks in components
+- Profile performance in development
+
+## Deployment and DevOps
+
+### Build Process
+
+- Use existing MTA build configuration
+- Follow SAP BTP deployment patterns
+- Maintain environment-specific configurations
+- Use proper versioning and changelog management
+
+### Configuration Management
+
+- Use environment variables for different stages
+- Keep sensitive data in proper credential stores
+- Document configuration requirements
+
+## Code Review Guidelines
+
+### Before Submitting
+
+- Run tests and ensure they pass
+- Check linting and formatting
+- Verify TypeScript compilation
+- Test functionality in browser
+- Update documentation if needed
+
+### Review Checklist
+
+- Code follows established patterns
+- Tests are adequate and passing
+- Performance implications considered
+- Security aspects reviewed
+- Documentation is updated
+
+## Domain-Specific Guidelines
+
+### E-Mobility Features
+
+- Understand charging station status workflows
+- Implement proper session state management
+- Handle badge authentication flows correctly
+- Consider real-time updates for station availability
+- Implement proper error handling for charging operations
+
+### User Experience
+
+- Provide clear feedback for charging operations
+- Handle offline scenarios gracefully
+- Implement proper loading states
+- Ensure accessibility compliance
+- Test on mobile devices
+
+## Documentation Requirements
+
+### Code Documentation
+
+- Document complex business logic
+- Explain non-obvious technical decisions
+- Keep README files updated
+- Document API changes and breaking changes
+
+### User Documentation
+
+- Maintain user guides for new features
+- Document configuration and setup procedures
+- Keep troubleshooting guides current
+
+## Error Handling
+
+### Frontend Errors
+
+- Implement global error handling
+- Provide user-friendly error messages
+- Log errors appropriately for debugging
+- Handle network failures gracefully
+
+### Service Errors
+
+- Use proper HTTP status codes
+- Implement structured error responses
+- Log errors with sufficient context
+- Handle business logic errors appropriately
+
+## Migration and Updates
+
+### Dependencies
+
+- Keep dependencies updated regularly
+- Test thoroughly after major updates
+- Document breaking changes
+- Maintain backward compatibility when possible
+
+### Framework Updates
+
+- Follow Vue.js migration guides
+- Update TypeScript and tooling consistently
+- Test all functionality after framework updates

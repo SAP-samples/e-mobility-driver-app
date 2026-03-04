@@ -1,0 +1,64 @@
+{
+  "requires": {
+    "db": {
+      "kind": "sqlite",
+      "impl": "@cap-js/sqlite",
+      "credentials": {
+        "url": "memory"
+      }
+    },
+    "auth": {
+      "[production]": {
+        "kind": "ias",
+        "ams": {
+          "generateDcl": true
+        }
+      },
+      "[hybrid]": {
+        "impl": "srv/auth/dev-auth.ts"
+      }
+    },
+    "ChargingStationService": {
+      "kind": "odata",
+      "model": "srv/external/ChargingStationService",
+      "credentials": {
+        "path": "/cpo/odata/chargingStation/v1",
+        "forwardAuthToken": true
+      },
+      "[production]": {
+        "vcap": {
+          "name": "emobility-api"
+        }
+      }
+    },
+    "ChargingSessionService": {
+      "kind": "odata",
+      "model": "srv/external/ChargingSessionService",
+      "credentials": {
+        "path": "/cpo/odata/chargingSession/v1",
+        "forwardAuthToken": true
+      },
+      "[production]": {
+        "vcap": {
+          "name": "emobility-api"
+        }
+      }
+    },
+    "RemoteBadgeService": {
+      "kind": "odata",
+      "model": "srv/external/RemoteBadgeService",
+      "credentials": {
+        "path": "/emsp/odata/badge/v1",
+        "forwardAuthToken": true
+      },
+      "[production]": {
+        "vcap": {
+          "name": "emobility-api"
+        }
+      }
+    },
+    "destinations": true,
+    "html5-runtime": true,
+    "html5-repo": true
+  }
+}
