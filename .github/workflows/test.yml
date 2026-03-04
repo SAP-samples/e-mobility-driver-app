@@ -30,12 +30,12 @@ jobs:
       - name: Run frontend tests with coverage
         run: npm run --prefix app/driver-vue test:coverage
       - name: Upload frontend coverage report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: frontend-coverage-report
           path: app/driver-vue/coverage/
       - name: Upload frontend test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: frontend-test-results
           path: app/driver-vue/reports/
@@ -62,12 +62,12 @@ jobs:
       - name: Run backend tests with coverage
         run: npm run test:coverage
       - name: Upload backend coverage report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: backend-coverage-report
           path: coverage/
       - name: Upload backend test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: backend-test-results
           path: reports/
