@@ -27,25 +27,25 @@ jobs:
 
       # Download all artifacts
       - name: Download frontend test results
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: frontend-test-results
           path: ./test-results/frontend
       
       - name: Download backend test results
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: backend-test-results
           path: ./test-results/backend
       
       - name: Download frontend coverage
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: frontend-coverage-report
           path: ./coverage/frontend
       
       - name: Download backend coverage
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: backend-coverage-report
           path: ./coverage/backend
