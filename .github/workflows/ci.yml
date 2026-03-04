@@ -21,10 +21,10 @@ jobs:
   report:
     needs: test
     if: github.event_name == 'pull_request'
-    runs-on: [self-hosted, solinas-ubuntu_22_04]
+    runs-on: [self-hosted, solinas-ubuntu_22_04, ubuntu-latest]
     steps:
       - uses: actions/checkout@v4
-      
+
       # Download all artifacts
       - name: Download frontend test results
         uses: actions/download-artifact@v3
