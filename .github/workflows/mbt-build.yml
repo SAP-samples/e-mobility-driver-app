@@ -9,7 +9,6 @@ on:
 jobs:
   mbt-build:
     runs-on: ubuntu-latest
-    container: devxci/mbtci-java17-node20
     steps:
       - uses: actions/checkout@v5
       - name: Install mbt
