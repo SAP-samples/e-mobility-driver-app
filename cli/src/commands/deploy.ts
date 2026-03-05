@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2026 SAP SE or an SAP affiliate company and e-mobility-driver-app contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { execSync } from 'child_process';
+import { execSync, execFileSync } from 'child_process';
 import path from 'path';
 
 import fs from 'fs-extra';
@@ -220,7 +220,7 @@ async function deployMta(): Promise<void> {
     Logger.info('');
 
     const archivePath = path.join('mta_archives', selectedArchive);
-    execSync(`cf deploy ${archivePath}`, {
+    execFileSync('cf', ['deploy', archivePath], {
       cwd: projectRoot,
       stdio: 'inherit',
       env: { ...process.env },
