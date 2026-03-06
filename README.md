@@ -2,7 +2,7 @@
 
 A comprehensive SAP CAP-based application for e-mobility charging station management, built with TypeScript, Vue.js, and modern development tools.
 
-## 📋 Project Overview
+## 📋 Description
 
 This is a full-stack e-mobility application that enables drivers to:
 
@@ -11,6 +11,32 @@ This is a full-stack e-mobility application that enables drivers to:
 - 📊 View charging statistics and history
 - 🗺️ Find available charging stations
 - 💳 Track charging costs and consumption
+
+## 📦 Requirements
+
+### SAP Software
+
+| Software | Version | Notes |
+| --- | --- | --- |
+| [SAP Cloud Application Programming Model (CAP)](https://cap.cloud.sap/docs/) | Latest | Core backend framework |
+| [SAP IAS (Identity Authentication Service)](https://help.sap.com/docs/identity-authentication) | - | Required for production authentication |
+| [SAP BTP Cloud Foundry](https://help.sap.com/docs/btp/sap-business-technology-platform/cloud-foundry-environment) | - | Required for deployment |
+
+### Development Tools (Required)
+
+| Tool | Version | Notes |
+| --- | --- | --- |
+| [Node.js](https://nodejs.org/) | >= 20 | JavaScript runtime |
+| [npm](https://www.npmjs.com/) | >= 8 | Package manager |
+| [SAP CDS CLI](https://cap.cloud.sap/docs/tools/#cds-cli) | Latest | Installed automatically via `npm run install:all` |
+
+### Development Tools (Optional)
+
+| Tool | Notes |
+| --- | --- |
+| [MBT (SAP Multitarget Application Build Tool)](https://sap.github.io/cloud-mta-build-tool/) | Required only for building the MTA archive |
+| [CF CLI (Cloud Foundry CLI)](https://docs.cloudfoundry.org/cf-cli/) | Required only for deploying to Cloud Foundry |
+| [VS Code](https://code.visualstudio.com/) | Recommended IDE, with preconfigured launch configurations |
 
 ## 🏗️ Architecture
 
@@ -279,12 +305,30 @@ npm test                  # Run backend tests
 7. **Build**: `cd cli && npm run cli build` (create MTA archive)
 8. **Deploy**: `cd cli && npm run cli deploy` (deploy to Cloud Foundry)
 
-## 📞 Support & Contributing
+## 📞 Support
 
 - **CLI Help**: `cd cli && npm run cli --help`
 - **CAP Documentation**: [SAP CAP Documentation](https://cap.cloud.sap/docs/)
 - **Vue.js Guide**: [Vue.js 3 Documentation](https://vuejs.org/)
 - **UI5 Web Components**: [UI5 Web Components](https://sap.github.io/ui5-webcomponents/)
+
+## 🤝 Contributing
+
+We welcome contributions to this project! Please read our [Contributing Guidelines](https://github.com/SAP/.github/blob/main/CONTRIBUTING.md) before submitting a pull request.
+
+For project-specific questions or issues, feel free to open a GitHub issue.
+
+## 📜 Code of Conduct
+
+We are committed to fostering a welcoming and respectful community. All participants are expected to uphold our [Code of Conduct](./CODE_OF_CONDUCT.md), which is based on the [Contributor Covenant v3.0](https://www.contributor-covenant.org/version/3/0/).
+
+Key points:
+- **Be respectful** — treat everyone with dignity regardless of background or identity
+- **Be constructive** — give and receive feedback gracefully
+- **Take responsibility** — own your actions and commit to repairing harm when it occurs
+- **Report issues** — violations can be reported by opening a GitHub issue or contacting the maintainers directly
+
+Please read the full [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) for details on expected behaviors, restricted behaviors, and the enforcement process.
 
 ## 📄 License
 
