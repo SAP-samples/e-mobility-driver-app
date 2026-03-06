@@ -20,7 +20,6 @@ This is a full-stack e-mobility application that enables drivers to:
 | --- | --- | --- |
 | [SAP Cloud Application Programming Model (CAP)](https://cap.cloud.sap/docs/) | Latest | Core backend framework |
 | [SAP IAS (Identity Authentication Service)](https://help.sap.com/docs/identity-authentication) | - | Required for production authentication |
-| [SAP AMS (Authorization Management Service)](https://help.sap.com/docs/authorization-management-service) | - | Required for policy-based authorization |
 | [SAP BTP Cloud Foundry](https://help.sap.com/docs/btp/sap-business-technology-platform/cloud-foundry-environment) | - | Required for deployment |
 
 ### Development Tools (Required)
