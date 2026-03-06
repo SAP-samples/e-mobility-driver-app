@@ -1,0 +1,216 @@
+_schema-version: 3.3.0
+ID: driver-app
+version: 1.0.0
+description: "Sample driver application for the e-mobility scenario"
+parameters:
+  enable-parallel-deployments: true
+  deploy_mode: html5-repo
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
+modules:
+  - name: app
+    type: approuter.nodejs
+    path: approuter/
+    parameters:
+      instances: 1
+      memory: 256M
+      buildpack: nodejs_buildpack
+      keep-existing-routes: true
+      routes:
+        - route: ${default-uri}
+    build-parameters:
+      builder: npm-ci
+    requires:
+      - name: driver-app-auth
+        parameters:
+          config:
+            credential-type: X509_GENERATED
+            validity: 365
+            validity-type: DAYS
+            app-identifier: approuter
+      - name: driver-app-destination
+      - name: driver-app-html5-repo-runtime
+        parameters:
+          content-target: true
+    provides:
+      - name: app-uri
+        properties:
+          url: ${default-url}
+
+  - name: driver-app-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      instances: 1
+      buildpack: nodejs_buildpack
+      routes:
+        - route: "${default-url}"
+    build-parameters:
+      builder: npm-ci
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+          srv-cert-url: '${protocol}://${default-host}.cert.${default-domain}'
+    requires:
+      - name: driver-app-auth
+        parameters:
+          config:
+            credential-type: X509_GENERATED
+            validity: 365
+            validity-type: DAYS
+            app-identifier: srv
+      - name: emobility-api
+        parameters:
+          config:
+            xsuaa:
+              credential-type: binding-secret
+      - name: driver-app-qr-config
+    deployed-after:
+      - driver-app-ams-policies-deployer
+    properties:
+      AMS_DCL_ROOT: ams/dcl
+
+  - name: driver-app-ams-policies-deployer
+    type: javascript.nodejs
+    path: gen/policies
+    parameters:
+      buildpack: nodejs_buildpack
+      no-route: true
+      no-start: true
+      tasks:
+        - name: deploy-dcl
+          command: npm start
+          memory: 512M
+    requires:
+      - name: driver-app-auth
+        parameters:
+          config:
+            credential-type: X509_GENERATED
+            validity: 365
+            validity-type: DAYS
+            app-identifier: ams-policy-deployer
+  - name: driver-destination-content
+    type: com.sap.application.content
+    requires:
+    - name: driver-app-destination
+      parameters:
+        content-target: true
+    - name: driver-app-html5-repo-host
+      parameters:
+        service-key:
+          name: driver-app_html5_repo_host-key
+    parameters:
+      content:
+        instance:
+          destinations:
+          - Name: driver-app_html5_repo_host
+            ServiceInstanceName: driver-app-html5-app-host
+            ServiceKeyName: driver-app_html5_repo_host-key
+            sap.cloud.service: driverui
+          existing_destinations_policy: ignore
+    build-parameters:
+      no-source: true
+  - name: driver-vue
+    type: html5
+    path: app/driver-vue
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms: [ ]
+    requires:
+      - name: driver-app-html5-repo-runtime
+  - name: driver-app-app-deployer
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: driver-app-html5-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+          - driver-vue.zip
+          name: driver-vue
+          target-path: resources/
+
+resources:
+  - name: driver-app-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+      config:
+        init_data:
+          instance:
+            existing_destinations_policy: update
+            destinations:
+              - Name: driver-srv-api
+                URL: ~{srv-api/srv-url}
+                Authentication: NoAuthentication
+                Type: HTTP
+                ProxyType: Internet
+                forwardAuthToken: true
+              - Name: ui5
+                URL: https://ui5.sap.com
+                Authentication: NoAuthentication
+                Type: HTTP
+                ProxyType: Internet
+        HTML5Runtime_enabled: true
+    requires:
+      - name: srv-api
+  - name: emobility-api
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: e-mobility-service
+      service-plan: api
+      config:
+        xsuaa:
+          credential-type: binding-secret
+  - name: driver-app-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: identity
+      service-name: driver-app-auth
+      service-plan: application
+      config:
+        display-name: Driver Application
+        home-url: ~{app-uri/url}
+        multi-tenant: false
+        authorization:
+          enabled: true
+        oauth2-configuration:
+          redirect-uris:
+            - ~{app-uri/url}/**
+          post-logout-redirect-uris:
+            - ~{app-uri/url}/logout.html
+        xsuaa-cross-consumption: true
+    requires:
+      - name: app-uri
+
+  - name: driver-app-html5-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: driver-app-html5-app-host
+      service-plan: app-host
+
+  - name: driver-app-html5-repo-runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: driver-app-html5-runtime
+      service-plan: app-runtime
+
+  - name: driver-app-qr-config
+    type: org.cloudfoundry.user-provided-service
+    parameters:
+      service-name: driver-app-qr-config

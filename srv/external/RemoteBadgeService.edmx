@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Authorization.V1.xml">
+    <edmx:Include Alias="Authorization" Namespace="Org.OData.Authorization.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+    <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+    <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Communication.xml">
+    <edmx:Include Alias="Communication" Namespace="com.sap.vocabularies.Communication.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/PersonalData.xml">
+    <edmx:Include Alias="PersonalData" Namespace="com.sap.vocabularies.PersonalData.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+    <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+    <edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1"/>
+  </edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="BadgeServiceAPI" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityContainer Name="EntityContainer">
+        <EntitySet Name="Badges" EntityType="BadgeServiceAPI.Badges"/>
+        <EntitySet Name="VehicleTypes" EntityType="BadgeServiceAPI.VehicleTypes"/>
+      </EntityContainer>
+      <EntityType Name="Badges">
+        <Key>
+          <PropertyRef Name="authenticationId"/>
+        </Key>
+        <Property Name="authenticationId" Type="Edm.String" MaxLength="36" Nullable="false"/>
+        <Property Name="visualBadgeId" Type="Edm.String" MaxLength="64" Nullable="false"/>
+        <Property Name="userId" Type="Edm.String" MaxLength="24"/>
+        <Property Name="firstName" Type="Edm.String" MaxLength="100"/>
+        <Property Name="lastName" Type="Edm.String" MaxLength="100"/>
+        <Property Name="email" Type="Edm.String" MaxLength="100"/>
+        <Property Name="vehicleId" Type="Edm.String" MaxLength="64"/>
+        <Property Name="validFrom" Type="Edm.Date"/>
+        <Property Name="validTo" Type="Edm.Date"/>
+        <Property Name="vehicleType" Type="Edm.String" MaxLength="20"/>
+        <Property Name="licensePlate" Type="Edm.String" MaxLength="100"/>
+        <Property Name="description" Type="Edm.String" MaxLength="100"/>
+        <Property Name="active" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+        <Property Name="tags" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="companyId" Type="Edm.Guid"/>
+      </EntityType>
+      <EntityType Name="VehicleTypes">
+        <Key>
+          <PropertyRef Name="vehicleTypeAcronym"/>
+          <PropertyRef Name="locale"/>
+        </Key>
+        <Property Name="vehicleTypeAcronym" Type="Edm.String" MaxLength="20" Nullable="false"/>
+        <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+        <Property Name="vehicleType" Type="Edm.String" MaxLength="200"/>
+      </EntityType>
+      <Action Name="UpdateCompany" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="BadgeServiceAPI.Badges"/>
+        <Parameter Name="companyId" Type="Edm.String"/>
+        <ReturnType Type="BadgeServiceAPI.Badges"/>
+      </Action>
+      <Annotation Term="Core.SchemaVersion" String="1.0"/>
+      <Annotation Term="Core.DefaultNamespace" Bool="true"/>
+      <Annotations Target="BadgeServiceAPI.EntityContainer">
+        <Annotation Term="Common.Label" String="Badge"/>
+        <Annotation Term="Core.Description" String="Manage your badges"/>
+        <Annotation Term="Core.LongDescription" String="Create, retrieve, and update your badges."/>
+        <Annotation Term="Authorization.Authorizations">
+          <Collection>
+            <Record Type="Authorization.OAuth2ClientCredentials">
+              <PropertyValue Property="TokenUrl" String="https://{identityzone}.authentication.{region}.hana.ondemand.com/oauth/token"/>
+              <PropertyValue Property="Name" String="oAuth2"/>
+              <PropertyValue Property="Description" String="Authentication via OAuth2 with client credentials flow"/>
+              <PropertyValue Property="Scopes">
+                <Collection>
+                  <Record Type="Authorization.AuthorizationScope">
+                    <PropertyValue Property="Scope" String="SAP_EMSP_API_Badge_Read"/>
+                    <PropertyValue Property="Description" String="Retrieves badges and vehicle types."/>
+                  </Record>
+                  <Record Type="Authorization.AuthorizationScope">
+                    <PropertyValue Property="Scope" String="SAP_EMSP_API_Badge_Write"/>
+                    <PropertyValue Property="Description" String="Creates and updates badges excluding their companyId."/>
+                  </Record>
+                  <Record Type="Authorization.AuthorizationScope">
+                    <PropertyValue Property="Scope" String="SAP_EMSP_API_Badge_Manage"/>
+                    <PropertyValue Property="Description" String="Creates, retrieves, and updates badges including their companyId."/>
+                  </Record>
+                </Collection>
+              </PropertyValue>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="Capabilities.BatchSupported" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.Badges">
+        <Annotation Term="Common.Label" String="Badges"/>
+        <Annotation Term="Communication.Contact">
+          <Record Type="Communication.ContactType">
+            <PropertyValue Property="n">
+              <Record Type="Communication.NameType">
+                <PropertyValue Property="surname" Path="user_surname"/>
+                <PropertyValue Property="given" Path="user_name"/>
+              </Record>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.EntityContainer/Badges">
+        <Annotation Term="Capabilities.ReadRestrictions">
+          <Record Type="Capabilities.ReadRestrictionsType">
+            <PropertyValue Property="Readable" Bool="true"/>
+            <PropertyValue Property="Description" String="Retrieves a list of badges."/>
+            <PropertyValue Property="LongDescription" String="Use the following request to retrieve a list of badges."/>
+            <PropertyValue Property="ReadByKeyRestrictions">
+              <Record Type="Capabilities.ReadByKeyRestrictionsType">
+                <PropertyValue Property="Readable" Bool="true"/>
+                <PropertyValue Property="LongDescription" String="Use the following request to retrieve a badge."/>
+                <PropertyValue Property="Description" String="Retrieves a badge."/>
+              </Record>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="true"/>
+            <PropertyValue Property="Description" String="Creates a badge."/>
+            <PropertyValue Property="LongDescription" String="Use the following request to create a badge."/>
+            <PropertyValue Property="RequiredProperties">
+              <Collection>
+                <PropertyPath>companyId</PropertyPath>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="true"/>
+            <PropertyValue Property="Description" String="Updates a badge."/>
+            <PropertyValue Property="LongDescription" String="Use the following request to update information related to a badge."/>
+            <PropertyValue Property="NonUpdatableProperties">
+              <Collection>
+                <PropertyPath>companyId</PropertyPath>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.Badges/authenticationId">
+        <Annotation Term="Core.LongDescription" String="The unique identifier used to authenticate a badge. Even if the maxLength indicated is 36 characters, the authenticationId has been restricted to 20 characters for the creation of new badges to comply with the OCPP 1.6 protocol. Only uppercase characters are supported, lowercase characters will be converted to uppercase for a new badge."/>
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.Badges/visualBadgeId">
+        <Annotation Term="Core.LongDescription" String="The badge's visual identifier"/>
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.Badges/userId">
+        <Annotation Term="Core.LongDescription" String="Additional user identifier"/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.Badges/firstName">
+        <Annotation Term="Core.LongDescription" String="The first name of the user to whom the badge belongs"/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.Badges/lastName">
+        <Annotation Term="Core.LongDescription" String="The last name of the user to whom the badge belongs"/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.Badges/email">
+        <Annotation Term="Validation.Pattern" String="[a-z0-9]+@[a-z]+\.[a-z]{2,3}"/>
+        <Annotation Term="Core.Example">
+          <Record Type="Core.ExampleValue">
+            <PropertyValue Property="Description" String="bob@sap.com"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Core.LongDescription" String="The email address of the user to whom the badge belongs"/>
+        <Annotation Term="Communication.IsEmailAddress" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.Badges/vehicleId">
+        <Annotation Term="Core.LongDescription" String="The unique identifier of the vehicle assigned to the badge"/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.Badges/validFrom">
+        <Annotation Term="Core.LongDescription" String="The date on which the badge's validity starts"/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.Badges/validTo">
+        <Annotation Term="Core.LongDescription" String="The date on which the badge's validity ends"/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.Badges/vehicleType">
+        <Annotation Term="Validation.AllowedValues">
+          <Collection>
+            <Record Type="Validation.AllowedValue">
+              <PropertyValue Property="Value" String="BEV"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <PropertyValue Property="Value" String="PHEV"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="Core.LongDescription" String="The type of vehicle assigned to the badge. Possible vehicle types are Battery-Powered Electric Vehicle (BEV) and Plug-In Hybrid Electric Vehicle (PHEV)."/>
+        <Annotation Term="Common.Text" Path="to_ElectricVehicleTypes/electric_vehicle_type_description">
+          <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+        </Annotation>
+        <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+        <Annotation Term="PersonalData.IsPotentiallyPersonal" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.Badges/licensePlate">
+        <Annotation Term="Core.LongDescription" String="The license plate of the vehicle assigned to the badge"/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.Badges/description">
+        <Annotation Term="Core.LongDescription" String="Contains additional information."/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.Badges/active">
+        <Annotation Term="Core.LongDescription" String="Determines if a badge is active. To start a charging session, the badge must be active and valid."/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.Badges/tags">
+        <Annotation Term="Core.LongDescription" String="Contains additional information to categorize badges."/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.Badges/companyId">
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.LongDescription" String="Identifies the company to which the badge is assigned."/>
+        <Annotation Term="Common.Text" Path="to_Companies/companyName">
+          <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+        </Annotation>
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.UpdateCompany(BadgeServiceAPI.Badges)">
+        <Annotation Term="Core.Description" String="Updates the companyId of a badge."/>
+        <Annotation Term="Core.LongDescription" String="Use the following request to update the companyId of a badge."/>
+        <Annotation Term="Core.OperationAvailable" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.VehicleTypes">
+        <Annotation Term="Common.Label" String="Vehicle Types"/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.EntityContainer/VehicleTypes">
+        <Annotation Term="Capabilities.ReadRestrictions">
+          <Record Type="Capabilities.ReadRestrictionsType">
+            <PropertyValue Property="Readable" Bool="false"/>
+            <PropertyValue Property="ReadByKeyRestrictions">
+              <Record Type="Capabilities.ReadByKeyRestrictionsType">
+                <PropertyValue Property="Readable" Bool="true"/>
+                <PropertyValue Property="Description" String="Retrieves a vehicle type."/>
+                <PropertyValue Property="LongDescription" String="Use the following request to retrieve a vehicle type."/>
+              </Record>
+            </PropertyValue>
+            <PropertyValue Property="Description" String="Retrieves information for vehicle types."/>
+            <PropertyValue Property="LongDescription" String="Use the following request to retrieve information related to your vehicle types."/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.VehicleTypes/vehicleTypeAcronym">
+        <Annotation Term="Validation.AllowedValues">
+          <Collection>
+            <Record Type="Validation.AllowedValue">
+              <PropertyValue Property="Value" String="BEV"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <PropertyValue Property="Value" String="PHEV"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="Core.LongDescription" String="The acronym for the type of vehicle assigned to the badge. Possible acronyms are BEV (Battery-Powered Electric Vehicle) and PHEV (Plug-In Hybrid Electric Vehicle)."/>
+        <Annotation Term="Common.Text" Path="electric_vehicle_type_description">
+          <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.VehicleTypes/locale">
+        <Annotation Term="Validation.AllowedValues">
+          <Collection>
+            <Record Type="Validation.AllowedValue">
+              <PropertyValue Property="Value" String="en"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <PropertyValue Property="Value" String="de"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <PropertyValue Property="Value" String="es"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <PropertyValue Property="Value" String="fr"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <PropertyValue Property="Value" String="it"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <PropertyValue Property="Value" String="ja"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <PropertyValue Property="Value" String="pt"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <PropertyValue Property="Value" String="pt_PT"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <PropertyValue Property="Value" String="zh_CN"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="Core.LongDescription" String="Specifies the language code."/>
+        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+      </Annotations>
+      <Annotations Target="BadgeServiceAPI.VehicleTypes/vehicleType">
+        <Annotation Term="Core.LongDescription" String="The type of vehicle assigned to the badge. Possible vehicle types are Battery-Powered Electric Vehicle (BEV) and Plug-In Hybrid Electric Vehicle (PHEV)."/>
+      </Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

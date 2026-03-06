@@ -1,0 +1,60 @@
+{
+  "name": "driver-vue",
+  "version": "1.0.0",
+  "description": "Vue for driver application",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "watch": "vite",
+    "dev": "vite build --watch --mode development",
+    "build:cf": "npm run build && npm run zip",
+    "build": "vue-tsc --noEmit && vite build",
+    "build:dev": "vue-tsc --noEmit && vite build --mode development",
+    "zip": "cd dist/ && npx bestzip driver-vue.zip * ../manifest.json",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage --silent"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@ui5/webcomponents": "2.12.0",
+    "@ui5/webcomponents-base": "2.12.0",
+    "@ui5/webcomponents-fiori": "2.12.0",
+    "@ui5/webcomponents-icons": "2.12.0",
+    "@ui5/webcomponents-icons-business-suite": "2.12.0",
+    "@ui5/webcomponents-icons-tnt": "2.12.0",
+    "@ui5/webcomponents-localization": "2.12.0",
+    "@ui5/webcomponents-theming": "2.12.0",
+    "@vite-pwa/assets-generator": "^1.0.0",
+    "@vueuse/core": "^13.4.0",
+    "cross-fetch": "^4.1.0",
+    "leaflet": "^1.9.4",
+    "leaflet.markercluster": "^1.5.3",
+    "odata-query": "8.0.3",
+    "pinia": "^3.0.3",
+    "vite-plugin-pwa": "^1.0.1",
+    "vue": "^3.5.13",
+    "vue-cookies": "^1.8.6",
+    "vue-i18n": "^11.1.12",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "9.9.0",
+    "@pinia/testing": "1.0.2",
+    "@testing-library/vue": "^8.1.0",
+    "@types/leaflet": "^1.9.19",
+    "@types/leaflet.markercluster": "1.5.5",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vue/tsconfig": "^0.7.0",
+    "happy-dom": "^18.0.1",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.6",
+    "vitest": "^3.2.4",
+    "vue-eslint-parser": "^10.1.4",
+    "vue-tsc": "^2.2.8"
+  }
+}

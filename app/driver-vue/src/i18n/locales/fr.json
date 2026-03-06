@@ -1,0 +1,215 @@
+{
+  "navigation": {
+    "home": "Accueil",
+    "stations": "Bornes",
+    "sessions": "Sessions",
+    "badges": "Badges",
+    "refresh": "Actualiser"
+  },
+  "common": {
+    "unknown": "Inconnu",
+    "loading": "Chargement...",
+    "dismiss": "Ignorer",
+    "try_again": "Réessayer",
+    "reload_page": "Recharger la page",
+    "connecting": "Connexion...",
+    "login": "Connexion"
+  },
+  "buttons": {
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "dismiss": "Ignorer",
+    "goto_home": "Retour à l'accueil",
+    "goto_sessions": "Voir toutes les sessions",
+    "goto_stations": "Voir les points de charge",
+    "view_on_map": "Voir sur la carte",
+    "view_all_history": "Voir tout l'historique",
+    "stop": "Arrêter",
+    "stop_session": "Arrêter la session"
+  },
+  "session": {
+    "id": "ID",
+    "date": "Date",
+    "energy": "Énergie",
+    "duration": "Durée",
+    "location": "Emplacement",
+    "charging_in_progress": "Charge en cours",
+    "finishing": "Finalisation",
+    "start": "Démarrer",
+    "starting": "Démarrage...",
+    "start_session_title": "Démarrer la session",
+    "start_session_confirm": "Voulez-vous démarrer une session ?",
+    "start_session_success": "Session de recharge acceptée. Vous pouvez brancher votre câble",
+    "errors": {
+      "start_failed": "Échec du démarrage de la session de recharge",
+      "evse_not_found": "Borne de recharge introuvable",
+      "no_connectors": "Aucun connecteur disponible",
+      "timeout": "Délai d'attente dépassé - veuillez réessayer",
+      "warning": "La session de recharge n'a pas pu être démarrée",
+      "backend": "Erreur du serveur",
+      "generic": "Une erreur s'est produite lors du démarrage de la session"
+    },
+    "preparing_action_required": "Session de recharge acceptée. Veuillez brancher votre câble ou appuyer sur le bouton de démarrage de la borne",
+    "timeout_info": "Session démarrée mais prend plus de temps que prévu. Vérifiez la borne de recharge.",
+    "start_warning": "Session acceptée mais la charge n'a pas démarré. Veuillez vérifier la borne.",
+    "start_success": "Charge démarrée avec succès"
+  },
+  "dashboard": {
+    "all_available_stations": "Points de Charge Disponibles",
+    "eco_balance": "Bilan Écologique",
+    "emissions_avoided": "d'émissions évitées",
+    "this_month_stats": "Statistiques du Mois",
+    "sessions": "Session | Session | Sessions",
+    "spent": "Dépensé",
+    "recent_charges": "Aucune session récente | Session récente | Sessions récentes"
+  },
+  "pages": {
+    "no_badges_found": "Aucun badge trouvé",
+    "no_charging_stations_found": "Aucun point de charge trouvé",
+    "no_station_data": "Aucune donnée de point de charge",
+    "searching_for_charging_stations": "Recherche des points de charge...",
+    "loading_evse_details": "Chargement des détails de point de charge..."
+  },
+  "login": {
+    "title": "Connexion",
+    "ready_to_charge": "Prêt à charger votre session ?",
+    "charging_up_connection": "Chargement de la connexion...",
+    "circuit_breaker_tripped": "Disjoncteur déclenché !",
+    "connect_to_grid": "Branchez-vous au réseau et boostez votre expérience électromobile ! Votre aventure électrique commence ici.",
+    "establishing_connection": "Établissement d'une connexion sécurisée au réseau e-mobilité...",
+    "connection_error": "Quelque chose s'est mal passé avec la connexion. Pas d'inquiétude - même les meilleurs points de charge ont parfois besoin d'une remise à zéro !"
+  },
+  "company": {
+    "name": "E-Mobility"
+  },
+  "map": {
+    "text": "Carte",
+    "list": "Liste"
+  },
+  "address": {
+    "title": "Adresse",
+    "number": "Numéro :",
+    "street": "Rue :",
+    "postal_code": "Code postal :",
+    "city": "Ville :",
+    "country_code": "Code pays :",
+    "country": "Pays :",
+    "state": "État :",
+    "latitude": "Latitude :",
+    "longitude": "Longitude :"
+  },
+  "location": {
+    "location_and_map": "Emplacement et carte"
+  },
+  "station": {
+    "charging_station_name": "Nom de la borne de recharge",
+    "emi3_id": "eMI3",
+    "stations": "Bornes",
+    "evse": "Point de Charge",
+    "connectors": "Connecteurs",
+    "connector_current_limit": "Limite de courant",
+    "connector_current_type": "Type de courant",
+    "connector_current": "Courant",
+    "connector_evse_index": "Index EVSE",
+    "connector_id": "ID",
+    "connector_max_power": "Puissance max.",
+    "connector_phases": "Phases",
+    "connector_status": "Statut",
+    "connector_type": "Type",
+    "connector_voltage": "Tension",
+    "no_code": "Aucun code",
+    "site": "Site",
+    "area": "Zone",
+    "parking": "Parking",
+    "level": "Niveau",
+    "space": "Espace",
+    "type": "Type",
+    "power": "Puissance"
+  },
+  "filter": {
+    "all_stations": "Tous les points de charge",
+    "available_only": "Disponibles uniquement",
+    "available_fast_chargers": "Chargeurs rapides disponibles",
+    "all": "Toutes",
+    "available": "Disponibles",
+    "fast": "Rapide",
+    "sort_ascending": "Tri croissant",
+    "sort_descending": "Tri décroissant",
+    "hide_additional_filters": "Masquer les filtres supplémentaires",
+    "show_additional_filters": "Afficher les filtres supplémentaires",
+    "clear_all_filters": "Effacer tous les filtres",
+    "location_active": "Localisation active",
+    "clear_all_filters_title": "Effacer tous les filtres",
+    "locating": "Localisation...",
+    "near_me": "Près de moi",
+    "search_placeholder": "Rechercher bornes, villes, zones...",
+    "charge_points": "Points de charge",
+    "places": "Lieux",
+    "month": "Mois",
+    "year": "Année",
+    "time_filter": "Filtre temporel"
+  },
+  "list": {
+    "load_more_results": "Charger plus de résultats",
+    "showing_count": "Affichage de {current} sur {total}",
+    "other": "Autre"
+  },
+  "status": {
+    "preparing": "Préparation",
+    "occupied": "Occupé",
+    "reserved": "Réservé",
+    "outoforder": "Hors service",
+    "inoperative": "Inopérant",
+    "disconnected": "Déconnecté"
+  },
+  "badge": {
+    "authentication_id": "ID d'authentification",
+    "first_name": "Prénom",
+    "last_name": "Nom de famille",
+    "car_license": "Plaque d'immatriculation",
+    "active": "Actif",
+    "expired": "Expiré"
+  },
+  "messages": {
+    "available_evses": "Aucun point de charge disponible | Point de charge disponible | Points de charge disponibles",
+    "available_stations": "Aucun point de charge disponible | Point de charge disponible | Points de charge disponibles",
+    "confirm_stop_session": "Voulez-vous arrêter la session ?",
+    "latest_sessions": "Dernières Sessions",
+    "no_data_message": "Tout est connecté, mais il n'y a rien à afficher pour le moment. Revenez bientôt pour plus d'action électrique !",
+    "no_data_title": "Fusible pas grillé — Juste pas de données !",
+    "no_sessions": "Aucune session trouvée",
+    "toast_session_stopped": "La session de recharge s'est arrêtée, vous pouvez débrancher votre câble."
+  },
+  "settings": {
+    "language": "Langue"
+  },
+  "language": {
+    "english": "Anglais",
+    "french": "Français",
+    "german": "Allemand"
+  },
+  "qr": {
+    "title": "Démarrage Rapide",
+    "scan_title": "Scanner le QR code pour démarrer la charge",
+    "scan_description": "Pointez votre caméra vers le QR code sur la borne de recharge",
+    "scan_button": "Scanner",
+    "browse_stations": "Voir les points de charge",
+    "decrypting": "Décryptage du QR code...",
+    "processing": "Démarrage de la session de recharge...",
+    "errors": {
+      "network_error": "Impossible de décrypter le QR code : Échec de la connexion réseau",
+      "invalid_qr": "QR code invalide ou corrompu",
+      "decryption_failed": "Échec du décryptage du QR code : Code invalide ou expiré",
+      "server_error": "Service QR code temporairement indisponible",
+      "generic_decrypt": "Échec du décryptage du QR code",
+      "missing_data": "Données cryptées manquantes dans l'URL QR",
+      "missing_parameters": "Paramètres requis manquants dans l'URL QR",
+      "invalid_connector": "ID de connecteur invalide dans l'URL QR",
+      "invalid_url": "Format d'URL QR invalide",
+      "invalid_format": "Format de QR code invalide : ce n'est pas un QR code E-Mobility valide",
+      "missing_fields": "Format de QR code invalide : champs requis manquants",
+      "incorrect_types": "Format de QR code invalide : types de données incorrects",
+      "scan_failed": "Échec du scan du QR code"
+    }
+  }
+}

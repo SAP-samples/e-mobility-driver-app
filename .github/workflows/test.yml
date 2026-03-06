@@ -1,0 +1,81 @@
+# SPDX-FileCopyrightText: 2026 SAP SE or an SAP affiliate company and e-mobility-driver-app contributors
+# SPDX-License-Identifier: Apache-2.0
+
+name: Test
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: false
+        type: string
+        default: '20'
+      min-coverage:
+        required: false
+        type: number
+        default: 80
+
+jobs:
+  test-frontend:
+    name: Frontend Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Use Node.js ${{ inputs.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+      - name: Install frontend dependencies
+        run: npm ci --prefix app/driver-vue
+      - name: Run frontend tests with coverage
+        run: npm run --prefix app/driver-vue test:coverage
+      - name: Upload frontend coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-coverage-report
+          path: app/driver-vue/coverage/
+      - name: Upload frontend test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-test-results
+          path: app/driver-vue/reports/
+      - name: Check frontend coverage threshold
+        run: |
+          COVERAGE=$(npx --yes coverage-percentage app/driver-vue/coverage/lcov.info --lcov)
+          echo "Frontend Coverage: $COVERAGE%"
+          if (( $(echo "$COVERAGE < ${{ inputs.min-coverage }}" | bc -l) )); then
+            echo "::error::Frontend code coverage ($COVERAGE%) is below the minimum (${{ inputs.min-coverage }}%)"
+            exit 1
+          fi
+
+  test-backend:
+    name: Backend Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Use Node.js ${{ inputs.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+      - name: Install backend dependencies
+        run: npm ci
+      - name: Run backend tests with coverage
+        run: npm run test:coverage
+      - name: Upload backend coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-coverage-report
+          path: coverage/
+      - name: Upload backend test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-test-results
+          path: reports/
+      - name: Check backend coverage threshold
+        run: |
+          COVERAGE=$(npx --yes coverage-percentage coverage/lcov.info --lcov)
+          echo "Backend Coverage: $COVERAGE%"
+          if (( $(echo "$COVERAGE < ${{ inputs.min-coverage }}" | bc -l) )); then
+            echo "::error::Backend code coverage ($COVERAGE%) is below the minimum (${{ inputs.min-coverage }}%)"
+            exit 1
+          fi

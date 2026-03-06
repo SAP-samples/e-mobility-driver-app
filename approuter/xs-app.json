@@ -1,0 +1,56 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "sessionTimeout": 30,
+  "logout": {
+    "logoutEndpoint": "/logout",
+    "logoutPage": "/logout.html"
+  },
+  "routes": [
+    {
+      "source": "^(.*logout.*)$",
+      "target": "$1",
+      "localDir": "src",
+      "authenticationType": "none"
+    },
+    {
+      "source": "^(manifest.*)$",
+      "target": "drivervue/$1",
+      "service": "html5-apps-repo-rt",
+      "authenticationType": "none"
+    },
+    {
+      "source": "^(.*apple.*png)$",
+      "target": "drivervue/$1",
+      "service": "html5-apps-repo-rt",
+      "authenticationType": "none"
+    },
+    {
+      "source": "^/user-api(.*)",
+      "target": "$1",
+      "service": "sap-approuter-userapi",
+      "authenticationType": "ias"
+    },
+    {
+      "source": "^(/odata/.*)$",
+      "target": "$1",
+      "destination": "driver-srv-api",
+      "authenticationType": "ias",
+      "csrfProtection": false
+    },
+    {
+      "source": "^(/rest/.*)$",
+      "target": "$1",
+      "destination": "driver-srv-api",
+      "authenticationType": "ias",
+      "csrfProtection": false
+    },
+    {
+      "source": "^(.*)$",
+      "target": "drivervue/$1",
+      "service": "html5-apps-repo-rt",
+      "authenticationType": "ias",
+      "cacheControl": "no-cache, no-store, must-revalidate"
+    }
+  ]
+}

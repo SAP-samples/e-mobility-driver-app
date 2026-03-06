@@ -1,0 +1,113 @@
+# SPDX-FileCopyrightText: 2026 SAP SE or an SAP affiliate company and e-mobility-driver-app contributors
+# SPDX-License-Identifier: Apache-2.0
+
+name: CI Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  mbt:
+    uses: ./.github/workflows/mbt-build.yml
+
+  test:
+    uses: ./.github/workflows/test.yml
+    with:
+      min-coverage: 80
+
+  report:
+    needs: test
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      # Download all artifacts
+      - name: Download frontend test results
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-test-results
+          path: ./test-results/frontend
+      
+      - name: Download backend test results
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-test-results
+          path: ./test-results/backend
+      
+      - name: Download frontend coverage
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-coverage-report
+          path: ./coverage/frontend
+      
+      - name: Download backend coverage
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-coverage-report
+          path: ./coverage/backend
+      
+      # Test reporting
+      - name: Publish Frontend Test Results
+        uses: dorny/test-reporter@v1
+        with:
+          name: Frontend Tests (Jest)
+          path: ./test-results/frontend/junit-report.xml
+          reporter: jest-junit
+          fail-on-error: false
+      
+      - name: Publish Backend Test Results
+        uses: dorny/test-reporter@v1
+        with:
+          name: Backend Tests (Jest/CAP)
+          path: ./test-results/backend/junit-report.xml
+          reporter: jest-junit
+          fail-on-error: false
+      
+      # Coverage reporting
+      - name: Frontend Coverage Summary
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: ./coverage/frontend/cobertura-coverage.xml
+          badge: true
+          format: markdown
+          output: file
+          thresholds: '60 80'
+      
+      - name: Move Frontend Coverage Report
+        run: |
+          if [ -f code-coverage-results.md ]; then
+            mv code-coverage-results.md frontend-coverage-results.md
+          fi
+      
+      - name: Backend Coverage Summary
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: ./coverage/backend/cobertura-coverage.xml
+          badge: true
+          format: markdown
+          output: file
+          thresholds: '60 80'
+      
+      - name: Move Backend Coverage Report
+        run: |
+          if [ -f code-coverage-results.md ]; then
+            mv code-coverage-results.md backend-coverage-results.md
+          fi
+      
+      - name: Publish Frontend Coverage Comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: frontend-coverage
+          recreate: true
+          path: frontend-coverage-results.md
+      
+      - name: Publish Backend Coverage Comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: backend-coverage
+          recreate: true
+          path: backend-coverage-results.md
