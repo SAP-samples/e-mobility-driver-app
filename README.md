@@ -294,6 +294,35 @@ npm test                  # Run backend tests
 | **Authentication** | SAP IAS | Identity management |
 | **Authorization** | SAP AMS | Policy-based access control |
 
+## 🌐 External Services & APIs
+
+This application integrates with the following external services at runtime:
+
+### SAP E-Mobility
+
+The backend proxies three OData APIs exposed by an SAP E-Mobility instance:
+
+| Service | API Path | Purpose |
+| --- | --- | --- |
+| **Charging Station Service** | `/cpo/odata/chargingStation/v1` | Retrieve EVSE and charging station data |
+| **Charging Session Service** | `/cpo/odata/chargingSession/v1` | Start/stop sessions, read CDRs and statistics |
+| **Badge Service** | `/emsp/odata/badge/v1` | Read and manage driver badges |
+
+All three services use OAuth2 Client Credentials. In development the credentials are stored in `.cdsrc-private.json` (not committed); in production they are injected via a Cloud Foundry service binding (`emobility-api`).
+
+> See [srv/README.md](./srv/README.md) for the full list of required OAuth scopes and configuration details.
+
+### OpenStreetMap
+
+The station map view uses two OpenStreetMap services:
+
+| Service | URL | Purpose |
+| --- | --- | --- |
+| **Tile Server** | `https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png` | Renders interactive map tiles via [Leaflet](https://leafletjs.com/) |
+| **Nominatim Geocoding** | `https://nominatim.openstreetmap.org/search` | Place-name search and location suggestions |
+
+Both services are free and require no API key, but usage must comply with the [OpenStreetMap Tile Usage Policy](https://operations.osmfoundation.org/policies/tiles/) and the [Nominatim Usage Policy](https://nominatim.org/release-docs/develop/api/Overview/#terms-of-use). Map tiles are attributed as "© OpenStreetMap contributors" in the map UI.
+
 ## 🔄 Development Workflow
 
 1. **Setup**: `npm run install:all` (installs all dependencies)
