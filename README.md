@@ -1,5 +1,7 @@
 # 🚗 E-Mobility Driver App
 
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/e-mobility-driver-app)](https://api.reuse.software/info/github.com/SAP-samples/e-mobility-driver-app)
+
 A comprehensive SAP CAP-based application for e-mobility charging station management, built with TypeScript, Vue.js, and modern development tools.
 
 ## 📋 Description
