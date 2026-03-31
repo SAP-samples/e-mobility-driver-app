@@ -217,14 +217,14 @@ const wrapper = mount(BadgeItem, {
 - ✅ **App Installation**: Add to home screen
 - ✅ **Offline Caching**: Workbox with smart caching strategies  
 - ✅ **App Screenshots**: Mobile/desktop screenshots for app stores
-- ✅ **Manifest**: "SAP Labs France Driver" branding
+- ✅ **Manifest**: Your company's branding
 
 ```typescript
-// Actual PWA config in vite.config.ts
+// PWA config in vite.config.ts
 VitePWA({
   manifest: {
-    name: 'SAP Labs France Driver',
-    short_name: 'SLF Driver',
+    name: 'My Company Driver',
+    short_name: 'EV Driver',
     theme_color: '#ffffff'
   },
   workbox: {
