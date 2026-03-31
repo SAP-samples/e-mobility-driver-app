@@ -44,9 +44,9 @@ export default defineConfig(({mode}) => {
                 useCredentials: true,
                 includeAssets: ['*.png'],
                 manifest: {
-                    name: 'SAP Labs France Driver',
-                    short_name: 'SLF Driver',
-                    description: 'Driver Application for SAP Labs France',
+                    name: 'E-Mobility Driver',
+                    short_name: 'EV Driver',
+                    description: 'Driver Application for E-Mobility',
                     theme_color: '#ffffff',
                     orientation: "portrait",
                     icons: [
