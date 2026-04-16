@@ -10,7 +10,8 @@ on:
     branches: [main]
 
 permissions:
-  checks: write
+  contents: read
+  checks: write # for dorny/test-reporter
 
 jobs:
   mbt:
