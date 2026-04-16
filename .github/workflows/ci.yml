@@ -9,6 +9,9 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  checks: write
+
 jobs:
   mbt:
     uses: ./.github/workflows/mbt-build.yml
