@@ -10,8 +10,8 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
   checks: write # for dorny/test-reporter
+  pull-requests: write # for marocchino/sticky-pull-request-comment
 
 jobs:
   mbt:
