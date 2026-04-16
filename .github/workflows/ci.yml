@@ -9,6 +9,10 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  checks: write # for dorny/test-reporter
+  pull-requests: write # for marocchino/sticky-pull-request-comment
+
 jobs:
   mbt:
     uses: ./.github/workflows/mbt-build.yml
