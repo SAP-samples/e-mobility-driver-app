@@ -23,6 +23,9 @@
   "engines": {
     "node": ">=20"
   },
+  "overrides": {
+    "handlebars": "4.7.9"
+  },
   "dependencies": {
     "@cap-js/sqlite": "2.0.4",
     "@sap-cloud-sdk/connectivity": "4.1.2",
@@ -40,7 +43,7 @@
     "@cap-js/cds-types": "0.15.0",
     "@sap/ams-dev": "2.2.0",
     "@sap/cds-compiler": "6.4.6",
-    "@sap/cds-dk": "9.4.3",
+    "@sap/cds-dk": "^9.9.0",
     "@types/jest": "30.0.0",
     "@types/lru-cache": "7.10.10",
     "@types/node": "24.7.2",
