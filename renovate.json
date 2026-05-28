@@ -4,12 +4,16 @@
     "config:recommended"
   ],
   "schedule": [
-    "0 0 * * 5"
+    "before 5am on friday"
   ],
   "timezone": "Europe/Paris",
   "labels": [
     "dependencies"
   ],
+  "constraints": {
+    "node": "^22.0.0 || ^24.0.0",
+    "npm": ">=10"
+  },
   "assignees": [],
   "reviewers": [],
   "prConcurrentLimit": 10,
@@ -21,64 +25,65 @@
     {
       "description": "Group all @sap packages together",
       "groupName": "SAP packages",
-      "matchPackagePrefixes": [
-        "@sap/"
+      "matchPackageNames": [
+        "@sap/**"
       ]
     },
     {
       "description": "Group all @ui5 packages together",
       "groupName": "UI5 Web Components",
-      "matchPackagePrefixes": [
-        "@ui5/"
+      "matchPackageNames": [
+        "@ui5/**"
       ]
     },
     {
       "description": "Group all @types packages together",
       "groupName": "TypeScript types",
-      "matchPackagePrefixes": [
-        "@types/"
+      "matchPackageNames": [
+        "@types/**"
       ]
     },
     {
       "description": "Group ESLint and related packages",
       "groupName": "ESLint and plugins",
-      "matchPackagePatterns": [
-        "^eslint",
-        "^@typescript-eslint/"
+      "matchPackageNames": [
+        "/^eslint/",
+        "@eslint/**",
+        "@typescript-eslint/**"
       ]
     },
     {
       "description": "Group Vue ecosystem packages",
       "groupName": "Vue ecosystem",
-      "matchPackagePatterns": [
-        "^vue",
-        "^@vue/",
-        "^@vitejs/plugin-vue"
+      "matchPackageNames": [
+        "/^vue/",
+        "@vue/**",
+        "@vitejs/plugin-vue"
       ]
     },
     {
       "description": "Group Vite and related packages",
       "groupName": "Vite and plugins",
-      "matchPackagePatterns": [
-        "^vite",
-        "vite-plugin-"
+      "matchPackageNames": [
+        "/^vite/",
+        "/vite-plugin-/"
       ]
     },
     {
       "description": "Group testing packages",
       "groupName": "Testing packages",
-      "matchPackagePatterns": [
-        "^jest",
-        "^vitest",
-        "^@vitest/",
-        "^@testing-library/"
+      "matchPackageNames": [
+        "/^jest/",
+        "/^vitest/",
+        "@vitest/**",
+        "@testing-library/**"
       ]
     },
     {
       "description": "Group SAP Cloud SDK packages",
       "groupName": "SAP Cloud SDK",
-      "matchPackagePrefixes": [
-        "@sap-cloud-sdk/"
+      "matchPackageNames": [
+        "@sap-cloud-sdk/**"
       ]
     },
     {
@@ -100,11 +105,11 @@
       "dependencyDashboardApproval": true
     },
     {
-      "description": "Pin dependencies for Docker and engines",
+      "description": "Do not update engines field — ranges must stay compatible with CI containers",
       "matchDepTypes": [
         "engines"
       ],
-      "rangeStrategy": "pin"
+      "enabled": false
     }
   ],
   "vulnerabilityAlerts": {
@@ -116,7 +121,7 @@
   "lockFileMaintenance": {
     "enabled": true,
     "schedule": [
-      "0 0 * * 5"
+      "before 5am on monday"
     ]
   },
   "npm": {
