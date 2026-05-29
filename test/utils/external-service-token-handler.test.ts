@@ -298,7 +298,17 @@ describe('External Service Token Handler', () => {
       }
     });
 
-    it('should inject token into request headers', async () => {
+    it('should inject token into req.headers (overrides forwardAuthToken in CAP 9.7+)', async () => {
+      // Regression guard for CAP 9.7.0 change:
+      //   "Remote services: Prefer cds.context.user?.authInfo?.token?.jwt over JWT in HTTP
+      //    header of incoming request"
+      //
+      // This makes the user's IAS JWT take priority over req.context.headers.authorization,
+      // silently overriding any client-credentials token we set there. The fix is to set
+      // authorization on req.headers, which CAP merges into requestConfig.headers and
+      // ultimately wins over destination.headers in fetchClient.js (`{ ...destination,
+      // ...requestConfig }`). If a future change moves the assignment back to
+      // req.context.headers, this test fails.
       const mockToken = 'bearer-token-123';
       const mockService = {
         options: {
@@ -324,26 +334,29 @@ describe('External Service Token Handler', () => {
         // Get the registered handler function
         const beforeHandler = mockService.before.mock.calls[0][1];
 
-        // Create mock request
+        // Create mock request with req.headers — this is what CAP's _getHeaders() reads
+        // and merges into requestConfig.headers for the outgoing HTTP request.
         const mockRequest = {
-          context: {
-            headers: {} as Record<string, string>,
-          },
+          headers: {} as Record<string, string>,
         };
 
         // Execute the handler
         await beforeHandler(mockRequest);
 
-        // Verify token was injected
-        expect(mockRequest.context.headers.authorization).toBe(`Bearer ${mockToken}`);
+        // Token must land on req.headers (not req.context.headers) to actually reach the wire
+        expect(mockRequest.headers['authorization']).toBe(`Bearer ${mockToken}`);
       } finally {
         // Restore original connect function
         cds.connect.to = originalConnect;
       }
     });
 
-    it('should handle missing request context gracefully', async () => {
-      const mockToken = 'bearer-token-456';
+    it('should initialize req.headers when absent (programmatic / internal calls)', async () => {
+      // CdsRequestWithContext does not declare a top-level `headers` property, and CAP may
+      // pass requests without one (e.g. programmatic service.run() calls). The handler must
+      // create the object before assigning, otherwise it crashes with TypeError.
+      const uniqueServiceName = 'NoHeadersTestService';
+      const mockToken = 'no-headers-token';
       const mockService = {
         options: {
           credentials: {
@@ -353,47 +366,6 @@ describe('External Service Token Handler', () => {
         before: jest.fn(),
       };
 
-      mockFetchClientCredentialsToken.mockResolvedValue({
-        access_token: mockToken,
-        expires_in: 3600,
-      });
-
-      // Mock cds.connect.to to return our mock service
-      const originalConnect = cds.connect.to;
-      cds.connect.to = jest.fn().mockResolvedValue(mockService);
-
-      try {
-        await registerExternalServiceTokenHandler();
-
-        const beforeHandler = mockService.before.mock.calls[0][1];
-
-        // Request without context
-        const mockRequest = {} as { context?: unknown };
-
-        // Should not throw error
-        await beforeHandler(mockRequest);
-
-        // No headers should be set
-        expect(mockRequest.context).toBeUndefined();
-      } finally {
-        // Restore original connect function
-        cds.connect.to = originalConnect;
-      }
-    });
-
-    it('should handle missing headers object gracefully', async () => {
-      const mockToken = 'bearer-token-789';
-      const uniqueServiceName = 'HeadersTestService';
-      const mockService = {
-        options: {
-          credentials: {
-            uaa: { clientid: 'test-client', clientsecret: 'test-secret' },
-          },
-        },
-        before: jest.fn(),
-      };
-
-      // Override cds.env.requires to use our unique service name
       const originalRequires = cds.env.requires;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (cds.env as any).requires = {
@@ -405,28 +377,71 @@ describe('External Service Token Handler', () => {
         expires_in: 3600,
       });
 
-      // Mock cds.connect.to to return our mock service
       const originalConnect = cds.connect.to;
       cds.connect.to = jest.fn().mockResolvedValue(mockService);
 
       try {
         await registerExternalServiceTokenHandler();
-
         const beforeHandler = mockService.before.mock.calls[0][1];
 
-        // Request with context but no headers
+        // Request with neither headers nor context — represents an internal/programmatic call
+        const mockRequest = {} as { headers?: Record<string, string> };
+
+        await expect(beforeHandler(mockRequest)).resolves.not.toThrow();
+
+        expect(mockRequest.headers).toBeDefined();
+        expect(mockRequest.headers!.authorization).toBe(`Bearer ${mockToken}`);
+      } finally {
+        cds.connect.to = originalConnect;
+        cds.env.requires = originalRequires;
+      }
+    });
+
+    it('should overwrite a pre-existing req.headers.authorization (forwardAuthToken JWT)', async () => {
+      // Simulates a request where CAP has already populated req.headers.authorization with
+      // the forwarded user JWT (forwardAuthToken: true). Our handler must overwrite it with
+      // the client-credentials token so the external service receives the correct identity.
+      const uniqueServiceName = 'OverwriteHeaderTestService';
+      const mockToken = 'client-creds-token-xyz';
+      const mockService = {
+        options: {
+          credentials: {
+            uaa: { clientid: 'test-client', clientsecret: 'test-secret' },
+          },
+        },
+        before: jest.fn(),
+      };
+
+      // Override cds.env.requires to use a unique service name so the LRU token cache
+      // doesn't return a token from a prior test
+      const originalRequires = cds.env.requires;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (cds.env as any).requires = {
+        [uniqueServiceName]: { kind: 'odata' },
+      };
+
+      mockFetchClientCredentialsToken.mockResolvedValue({
+        access_token: mockToken,
+        expires_in: 3600,
+      });
+
+      const originalConnect = cds.connect.to;
+      cds.connect.to = jest.fn().mockResolvedValue(mockService);
+
+      try {
+        await registerExternalServiceTokenHandler();
+        const beforeHandler = mockService.before.mock.calls[0][1];
+
         const mockRequest = {
-          context: {} as { headers?: Record<string, string> },
+          headers: {
+            authorization: 'Bearer user-ias-jwt-from-incoming-request',
+          } as Record<string, string>,
         };
 
-        // Should not throw error
         await beforeHandler(mockRequest);
 
-        // Headers should be initialized and authorization token set
-        expect(mockRequest.context.headers).toBeDefined();
-        expect(mockRequest.context.headers!.authorization).toBe(`Bearer ${mockToken}`);
+        expect(mockRequest.headers['authorization']).toBe(`Bearer ${mockToken}`);
       } finally {
-        // Restore original connect function and requires
         cds.connect.to = originalConnect;
         cds.env.requires = originalRequires;
       }
@@ -464,7 +479,7 @@ describe('External Service Token Handler', () => {
         const beforeHandler = mockService.before.mock.calls[0][1];
 
         const mockRequest = {
-          context: { headers: {} },
+          headers: {} as Record<string, string>,
         };
 
         // Test that error handling code path is covered - error should propagate

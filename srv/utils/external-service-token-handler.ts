@@ -82,13 +82,23 @@ export async function registerExternalServiceTokenHandler() {
       const uaa = extService.options.credentials.uaa;
       const token = await getOrFetchToken(uaa, serviceName);
 
-      // Ensure context and headers exist before setting authorization
-      if (req.context) {
-        if (!req.context.headers) {
-          req.context.headers = {};
-        }
-        req.context.headers.authorization = `Bearer ${token}`;
+      // Set authorization on req.headers (not req.context.headers).
+      //
+      // CAP 9.7.0 changed the JWT lookup order in remote service requests so the user's
+      // IAS token from cds.context.user.authInfo.token.jwt now takes priority over
+      // req.context.headers.authorization. Setting req.context.headers therefore has no
+      // effect in production with IAS auth — the user JWT is forwarded instead of the
+      // client-credentials token we want to inject.
+      //
+      // _getHeaders() in the remote service merges req.headers into requestConfig.headers,
+      // and fetchClient.js merges as `{ ...destination.headers, ...requestConfig.headers }` —
+      // so authorization set via req.headers always wins over the forwardAuthToken JWT.
+      //
+      // req.headers may be absent on programmatic / internal calls, so initialize it.
+      if (!req.headers) {
+        (req as { headers?: Record<string, string> }).headers = {};
       }
+      req.headers['authorization'] = `Bearer ${token}`;
     });
   }
 }
