@@ -2,7 +2,7 @@ import cds from '@sap/cds/eslint.config.mjs';
 import tsEslint from '@typescript-eslint/eslint-plugin';
 import prettier from 'eslint-plugin-prettier';
 import vue from 'eslint-plugin-vue';
-import importPlugin from 'eslint-plugin-import';
+import importPlugin from 'eslint-plugin-import-x';
 import globals from 'globals';
 
 const vueEslintParser = await import('vue-eslint-parser');
@@ -10,7 +10,7 @@ const tsEslintParser = await import('@typescript-eslint/parser');
 
 export default [
   {
-    ignores: ['**/dist/', '**/node_modules/', '**/coverage/'],
+    ignores: ['**/dist/', '**/node_modules/', '**/coverage/', 'gen/'],
   },
   {
     files: ['**/*.{js,ts,vue}'],
@@ -44,15 +44,15 @@ export default [
       '@typescript-eslint': tsEslint,
       prettier,
       vue,
-      import: importPlugin,
+      'import-x': importPlugin,
     },
     rules: {
       ...(vue.configs['vue3-recommended']?.rules ?? {}),
       ...(tsEslint.configs.recommended?.rules ?? {}),
-      ...(importPlugin.configs.recommended?.rules ?? {}),
+      ...(importPlugin.configs['flat/recommended']?.rules ?? {}),
       'prettier/prettier': 'error',
-      'import/no-unresolved': 'off',
-      'import/order': [
+      'import-x/no-unresolved': 'off',
+      'import-x/order': [
         'error',
         {
           alphabetize: { order: 'asc', caseInsensitive: true },
