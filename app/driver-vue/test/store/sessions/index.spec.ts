@@ -55,12 +55,12 @@ vi.mock('@/composables/useODataCollection', () => ({
 
 // Mock SessionApi
 vi.mock('@/store/sessions/api', () => ({
-  SessionApi: vi.fn().mockImplementation(() => ({
+  SessionApi: vi.fn().mockImplementation(function () { return {
     find: vi.fn().mockResolvedValue([]),
     startSession: vi.fn().mockResolvedValue(undefined),
     stopSession: vi.fn().mockResolvedValue(undefined),
     fetchMonthlyStats: vi.fn().mockResolvedValue({ totalSessions: 0, totalKwh: 0, totalAmount: 0 }),
-  })),
+  }; }),
 }));
 
 // Mock presets
@@ -82,7 +82,7 @@ vi.mock('@/store/sessions/presets', () => ({
 
 // Mock query builder
 vi.mock('@/store/sessions/query-builder', () => ({
-  SessionQuery: vi.fn().mockImplementation(() => ({
+  SessionQuery: vi.fn().mockImplementation(function () { return {
     build: vi.fn().mockReturnValue({}),
     setOrderBy: vi.fn().mockReturnThis(),
     status: vi.fn().mockReturnThis(),
@@ -93,7 +93,7 @@ vi.mock('@/store/sessions/query-builder', () => ({
     energy: vi.fn().mockReturnThis(),
     duration: vi.fn().mockReturnThis(),
     price: vi.fn().mockReturnThis(),
-  })),
+  }; }),
 }));
 
 beforeEach(() => {

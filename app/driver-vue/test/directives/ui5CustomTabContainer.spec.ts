@@ -178,11 +178,13 @@ describe('ui5CustomTabContainer directive', () => {
     mockObserve = vi.fn();
     mockDisconnect = vi.fn();
     mockMutationObserver = vi.fn().mockImplementation(
-      (callback: MutationCallback): MockMutationObserver => ({
-        observe: mockObserve,
-        disconnect: mockDisconnect,
-        callback,
-      }),
+      function (callback: MutationCallback): MockMutationObserver {
+        return {
+          observe: mockObserve,
+          disconnect: mockDisconnect,
+          callback,
+        };
+      },
     );
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     global.MutationObserver = mockMutationObserver as any;
