@@ -141,12 +141,12 @@ vi.mock('@/composables/useGeolocationCollection', () => ({
 const mockFindByCode = vi.fn().mockResolvedValue(mockEvse);
 
 vi.mock('@/store/evse/api', () => ({
-  EvseApi: vi.fn().mockImplementation(() => ({
+  EvseApi: vi.fn().mockImplementation(function () { return {
     fetch: vi.fn().mockResolvedValue({ data: [], total: 0 }),
     fetchById: vi.fn().mockResolvedValue(null),
     findByCode: mockFindByCode,
     findByChargingStationId: vi.fn().mockResolvedValue(null),
-  })),
+  }; }),
 }));
 
 // Mock presets
@@ -182,7 +182,7 @@ vi.mock('@/store/evse/presets', () => ({
 
 // Mock query builder
 vi.mock('@/store/evse/query-builder', () => ({
-  EvseQuery: vi.fn().mockImplementation(() => ({
+  EvseQuery: vi.fn().mockImplementation(function () { return {
     build: vi.fn().mockReturnValue({}),
     setOrderBy: vi.fn().mockReturnThis(),
     status: vi.fn().mockReturnThis(),
@@ -200,7 +200,7 @@ vi.mock('@/store/evse/query-builder', () => ({
         clone: vi.fn().mockReturnThis(),
       };
     }),
-  })),
+  }; }),
 }));
 
 beforeEach(() => {

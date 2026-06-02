@@ -53,10 +53,10 @@ vi.mock('@/composables/useODataCollection', () => ({
 
 // Mock BadgeApi
 vi.mock('@/store/badges/api', () => ({
-  BadgeApi: vi.fn().mockImplementation(() => ({
+  BadgeApi: vi.fn().mockImplementation(function () { return {
     fetch: vi.fn().mockResolvedValue({ data: [], total: 0 }),
     fetchById: vi.fn().mockResolvedValue(null),
-  })),
+  }; }),
 }));
 
 // Mock presets
@@ -73,14 +73,14 @@ vi.mock('@/store/badges/presets', () => ({
 
 // Mock query builder
 vi.mock('@/store/badges/query-builder', () => ({
-  BadgeQuery: vi.fn().mockImplementation(() => ({
+  BadgeQuery: vi.fn().mockImplementation(function () { return {
     build: vi.fn().mockReturnValue({}),
     setOrderBy: vi.fn().mockReturnThis(),
     status: vi.fn().mockReturnThis(),
     search: vi.fn().mockReturnThis(),
     user: vi.fn().mockReturnThis(),
     licensePlate: vi.fn().mockReturnThis(),
-  })),
+  }; }),
 }));
 
 beforeEach(() => {

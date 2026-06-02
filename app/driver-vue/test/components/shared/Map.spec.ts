@@ -69,11 +69,11 @@ vi.mock('leaflet.markercluster/dist/leaflet.markercluster.js', () => ({}));
 vi.mock('leaflet.markercluster/dist/MarkerCluster.Default.css', () => ({}));
 
 // Safe ResizeObserver mock for different environments
-const mockResizeObserver = vi.fn().mockImplementation(() => ({
+const mockResizeObserver = vi.fn().mockImplementation(function () { return {
   observe: vi.fn(),
   unobserve: vi.fn(),
   disconnect: vi.fn(),
-}));
+}; });
 
 // Mock ResizeObserver safely across environments
 if (typeof global !== 'undefined') {
