@@ -39,7 +39,7 @@
     "@types/inquirer": "9.0.9",
     "@types/node": "24.12.4",
     "@types/pdfkit": "0.17.6",
-    "tsx": "4.20.6",
+    "tsx": "4.22.4",
     "typescript": "5.9.3"
   }
 }
