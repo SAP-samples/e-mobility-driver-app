@@ -31,45 +31,47 @@ jobs:
 
       # Download all artifacts
       - name: Download frontend test results
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: frontend-test-results
           path: ./test-results/frontend
       
       - name: Download backend test results
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: backend-test-results
           path: ./test-results/backend
       
       - name: Download frontend coverage
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: frontend-coverage-report
           path: ./coverage/frontend
       
       - name: Download backend coverage
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: backend-coverage-report
           path: ./coverage/backend
       
       # Test reporting
       - name: Publish Frontend Test Results
-        uses: dorny/test-reporter@v1
+        uses: dorny/test-reporter@v3
         with:
           name: Frontend Tests (Jest)
           path: ./test-results/frontend/junit-report.xml
           reporter: jest-junit
           fail-on-error: false
-      
+          use-actions-summary: false
+
       - name: Publish Backend Test Results
-        uses: dorny/test-reporter@v1
+        uses: dorny/test-reporter@v3
         with:
           name: Backend Tests (Jest/CAP)
           path: ./test-results/backend/junit-report.xml
           reporter: jest-junit
           fail-on-error: false
+          use-actions-summary: false
       
       # Coverage reporting
       - name: Frontend Coverage Summary
@@ -103,14 +105,14 @@ jobs:
           fi
       
       - name: Publish Frontend Coverage Comment
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         with:
           header: frontend-coverage
           recreate: true
           path: frontend-coverage-results.md
       
       - name: Publish Backend Coverage Comment
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         with:
           header: backend-coverage
           recreate: true
