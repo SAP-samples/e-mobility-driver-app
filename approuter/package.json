@@ -10,7 +10,7 @@
     "start": "node src/router.js"
   },
   "dependencies": {
-    "@sap/approuter": "23.0.0"
+    "@sap/approuter": "23.3.0"
   },
   "engines": {
     "node": "^22.13.0 || ^24.0.0",
