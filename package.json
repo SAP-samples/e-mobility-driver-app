@@ -35,7 +35,7 @@
     "@sap/ams": "3.5.0",
     "@sap/cds": "9.9.1",
     "@sap/xssec": "4.11.2",
-    "express": "4.21.2",
+    "express": "4.22.3",
     "lru-cache": "11.2.2"
   },
   "devDependencies": {
